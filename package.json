@@ -7,7 +7,8 @@
     "build": "relay-compiler --validate && next build",
     "start": "next start",
     "lint": "next lint",
-    "relay": "relay-compiler"
+    "relay": "relay-compiler",
+    "get-schema": "bunx get-graphql-schema https://graphql.minaexplorer.com/ > src/schema.graphql"
   },
   "dependencies": {
     "next": "14.0.0",
