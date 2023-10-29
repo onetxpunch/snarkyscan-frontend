@@ -5,6 +5,7 @@ import { useMemo, useEffect } from "react";
 import { RelayPageProps } from "../relay-types";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
+import Nav from "@/components/Nav";
 
 export default function App({
   Component,
@@ -24,7 +25,10 @@ export default function App({
 
   return (
     <RelayEnvironmentProvider environment={environment}>
-      <Component {...pageProps} />
+      <Nav />
+      <div className="p-8">
+        <Component {...pageProps} />
+      </div>
     </RelayEnvironmentProvider>
   );
 }
