@@ -6,7 +6,7 @@ export default function Document() {
       <Head />
       <body>
         <main
-          className={`flex min-h-screen flex-col items-center justify-between`}
+          className={`flex min-h-screen container mx-auto flex-col items-center justify-between`}
         >
           <Main />
         </main>

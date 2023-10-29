@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e90797b8af63848c7acd8768cadf9e90>>
+ * @generated SignedSource<<5591c142d3f73dbe344cb9f4fba4619a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,9 +9,11 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type ListQuery$variables = Record<PropertyKey, never>;
-export type ListQuery$data = {
-  readonly blocks: ReadonlyArray<{
+export type BlockQuery$variables = {
+  blockHeight: number;
+};
+export type BlockQuery$data = {
+  readonly block: {
     readonly blockHeight: number | null | undefined;
     readonly canonical: boolean | null | undefined;
     readonly creator: string | null | undefined;
@@ -27,15 +29,22 @@ export type ListQuery$data = {
     readonly winnerAccount: {
       readonly publicKey: string | null | undefined;
     } | null | undefined;
-  } | null | undefined>;
+  } | null | undefined;
 };
-export type ListQuery = {
-  response: ListQuery$data;
-  variables: ListQuery$variables;
+export type BlockQuery = {
+  response: BlockQuery$data;
+  variables: BlockQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "blockHeight"
+  }
+],
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -44,32 +53,26 @@ var v0 = [
     "storageKey": null
   }
 ],
-v1 = [
+v2 = [
   {
     "alias": null,
     "args": [
       {
-        "kind": "Literal",
-        "name": "limit",
-        "value": 10
-      },
-      {
-        "kind": "Literal",
-        "name": "query",
-        "value": {
-          "canonical": true
-        }
-      },
-      {
-        "kind": "Literal",
-        "name": "sortBy",
-        "value": "BLOCKHEIGHT_DESC"
+        "fields": [
+          {
+            "kind": "Variable",
+            "name": "blockHeight",
+            "variableName": "blockHeight"
+          }
+        ],
+        "kind": "ObjectValue",
+        "name": "query"
       }
     ],
     "concreteType": "Block",
     "kind": "LinkedField",
-    "name": "blocks",
-    "plural": true,
+    "name": "block",
+    "plural": false,
     "selections": [
       {
         "alias": null,
@@ -92,7 +95,7 @@ v1 = [
         "kind": "LinkedField",
         "name": "creatorAccount",
         "plural": false,
-        "selections": (v0/*: any*/),
+        "selections": (v1/*: any*/),
         "storageKey": null
       },
       {
@@ -151,41 +154,41 @@ v1 = [
         "kind": "LinkedField",
         "name": "winnerAccount",
         "plural": false,
-        "selections": (v0/*: any*/),
+        "selections": (v1/*: any*/),
         "storageKey": null
       }
     ],
-    "storageKey": "blocks(limit:10,query:{\"canonical\":true},sortBy:\"BLOCKHEIGHT_DESC\")"
+    "storageKey": null
   }
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ListQuery",
-    "selections": (v1/*: any*/),
+    "name": "BlockQuery",
+    "selections": (v2/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ListQuery",
-    "selections": (v1/*: any*/)
+    "name": "BlockQuery",
+    "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "e42e28ad29980938f9663ab033171019",
+    "cacheID": "e19fffab2b36ca49e21d41b6229c5c9f",
     "id": null,
     "metadata": {},
-    "name": "ListQuery",
+    "name": "BlockQuery",
     "operationKind": "query",
-    "text": "query ListQuery {\n  blocks(sortBy: BLOCKHEIGHT_DESC, query: {canonical: true}, limit: 10) {\n    snarkFees\n    blockHeight\n    creatorAccount {\n      publicKey\n    }\n    dateTime\n    canonical\n    creator\n    receivedTime\n    stateHash\n    stateHashField\n    txFees\n    winnerAccount {\n      publicKey\n    }\n  }\n}\n"
+    "text": "query BlockQuery(\n  $blockHeight: Int!\n) {\n  block(query: {blockHeight: $blockHeight}) {\n    snarkFees\n    blockHeight\n    creatorAccount {\n      publicKey\n    }\n    dateTime\n    canonical\n    creator\n    receivedTime\n    stateHash\n    stateHashField\n    txFees\n    winnerAccount {\n      publicKey\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d975cfeb0e0855452c89a45096975baf";
+(node as any).hash = "3879d9839707429e7493eb5170348761";
 
 export default node;
