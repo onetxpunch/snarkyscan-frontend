@@ -11,6 +11,8 @@
     "get-schema": "bunx get-graphql-schema https://graphql.minaexplorer.com/ > src/schema.graphql"
   },
   "dependencies": {
+    "@react-icons/all-files": "^4.1.0",
+    "coingecko-api-v3": "^0.0.29",
     "next": "14.0.0",
     "react": "^18",
     "react-dom": "^18",
