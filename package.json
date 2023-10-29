@@ -13,6 +13,7 @@
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
     "coingecko-api-v3": "^0.0.29",
+    "luxon": "^3.4.3",
     "next": "14.0.0",
     "react": "^18",
     "react-dom": "^18",

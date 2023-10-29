@@ -60,7 +60,7 @@ const Overview = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-2 p-4 my-4 shadow-xl rounded-xl bg-slate-200">
+    <div className="flex flex-col gap-5 p-4 my-4 shadow-xl rounded-xl bg-slate-100  border-[1px] border-emerald-400">
       <div className="flex items-center gap-2">
         <img
           alt="mina logo"

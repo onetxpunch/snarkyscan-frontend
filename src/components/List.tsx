@@ -1,6 +1,8 @@
+import { DateTime } from "luxon";
 import { graphql } from "relay-runtime";
 import { useLazyLoadQuery } from "react-relay";
 import { ListQuery as ListQueryT } from "../../__generated__/ListQuery.graphql";
+import { VscExtensions } from "@react-icons/all-files/vsc/VscExtensions";
 
 const ListQuery = graphql`
   query ListQuery {
@@ -26,10 +28,15 @@ const ListQuery = graphql`
 
 const Card = ({ x, i }) => {
   return (
-    <div className={`bg-slate-300 hover:bg-slate-200 rounded-lg shadow-xl p-4`}>
-      <div className="text-3xl font-bold">{x?.blockHeight} </div>
-      <div>{x?.dateTime}</div>
-      <div>Fees: {x?.snarkFees}</div>
+    <div
+      className={`bg-slate-100 hover:bg-emerald-100 border-[1px] border-emerald-400 rounded-lg shadow-xl p-4`}
+    >
+      <div className="flex gap-2 text-3xl font-bold text-emerald-600">
+        <VscExtensions /> {x?.blockHeight}{" "}
+      </div>
+      <div>{DateTime.fromISO(x?.dateTime).toRelative()}</div>
+      <div>Miner: {x?.creator.slice(0, 6) + "..." + x?.creator.slice(-6)}</div>
+      <div>Snark Rewards: {x?.snarkFees} MINA</div>
     </div>
   );
 };
