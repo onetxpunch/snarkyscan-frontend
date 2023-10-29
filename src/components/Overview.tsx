@@ -4,6 +4,8 @@ import { useLazyLoadQuery } from "react-relay";
 import { OverviewQuery as OverviewQueryT } from "../../__generated__/OverviewQuery.graphql";
 import { useState } from "react";
 import { useEffect } from "react";
+import { VscGlobe } from "@react-icons/all-files/vsc/VscGlobe";
+import { VscCreditCard } from "@react-icons/all-files/vsc/VscCreditCard";
 
 const OverviewQuery = graphql`
   query OverviewQuery {
@@ -58,13 +60,34 @@ const Overview = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-3 p-4 my-4 shadow-xl rounded-xl bg-slate-200">
-      <div>Mina price</div>
-      <div>{formatUSD(lastPrice)}</div>
-      <div>Market cap</div>
-      <div>{formatUSD(marketCap)}</div>
-      <div>Last finalized block</div>
-      <div>{data.blocks[0].blockHeight}</div>
+    <div className="flex flex-col gap-2 p-4 my-4 shadow-xl rounded-xl bg-slate-200">
+      <div className="flex items-center gap-2">
+        <img
+          alt="mina logo"
+          src="/mina-logo.png"
+          className="w-8 h-8 rounded-full text-slate-800"
+        />
+        <div className="flex flex-col">
+          <div className="text-sm uppercase text-slate-600"> Mina price</div>
+          <div>{formatUSD(lastPrice)}</div>
+        </div>
+      </div>
+      <div className="flex items-center gap-2">
+        <VscGlobe className="w-8 h-8 text-slate-800" />
+        <div className="flex flex-col">
+          <div className="text-sm uppercase text-slate-600">Market cap</div>
+          <div>{formatUSD(marketCap)}</div>
+        </div>
+      </div>
+      <div className="flex items-center gap-2">
+        <VscCreditCard className="w-8 h-8 text-slate-800" />
+        <div className="flex flex-col">
+          <div className="text-sm uppercase text-slate-600">
+            Last finalized block
+          </div>
+          <div>{data.blocks[0].blockHeight}</div>
+        </div>
+      </div>
     </div>
   );
 };

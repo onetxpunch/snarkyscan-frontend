@@ -38,6 +38,7 @@ const List = () => {
   const data = useLazyLoadQuery<ListQueryT>(ListQuery, {});
   return (
     <div className="flex flex-col gap-3">
+      <div className="text-xl font-semibold">Latest blocks</div>
       {data.blocks.map((x, i) => {
         return <Card x={x} key={`${x?.creator}${i}`} />;
       })}
