@@ -15,6 +15,7 @@
     "coingecko-api-v3": "^0.0.29",
     "luxon": "^3.4.3",
     "next": "14.0.0",
+    "next-seo": "^6.4.0",
     "react": "^18",
     "react-dom": "^18",
     "react-relay": "^16.0.0",
