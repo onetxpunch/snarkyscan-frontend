@@ -88,13 +88,13 @@ const AccountNav = ({ address }) => {
     <div className="flex gap-2">
       <Link
         href={`/address/${address}`}
-        className="p-2 rounded-lg text-xs bg-slate-50 hover:bg-slate-100 border-[1px] border-slate-200"
+        className={`p-2 rounded-lg text-xs bg-slate-50 hover:bg-slate-100 border-[1px] border-slate-200`}
       >
         Overview
       </Link>
       <Link
         href={`/address/${address}/txns`}
-        className="p-2 rounded-lg hover:bg-slate-100 text-xs bg-slate-50 border-[1px] border-slate-200"
+        className={`p-2 rounded-lg hover:bg-slate-100 text-xs bg-slate-50 border-[1px] border-slate-200`}
       >
         Transactions
       </Link>
@@ -103,7 +103,15 @@ const AccountNav = ({ address }) => {
 };
 
 const TxnList = () => {
-  return <></>;
+  const data = [];
+  const [minaBalance, setMinaBalance] = useState<number>();
+  return (
+    <div className="p-4 bg-white flex flex-col gap-3 border-slate-200 rounded-lg border-[1px]">
+      <div className="text-lg">
+        A total of {data.length} transactions were found.
+      </div>
+    </div>
+  );
 };
 
 const Address = ({ address }) => {
