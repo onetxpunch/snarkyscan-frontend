@@ -4,6 +4,7 @@ import { useLazyLoadQuery } from "react-relay";
 import { ListQuery as ListQueryT } from "../../__generated__/ListQuery.graphql";
 import { VscExtensions } from "@react-icons/all-files/vsc/VscExtensions";
 import Link from "next/link";
+import { formatNum } from "@/ts/utils";
 
 const ListQuery = graphql`
   query ListQuery {
@@ -34,7 +35,7 @@ const Card = ({ x }) => {
         className={`bg-slate-100 hover:bg-emerald-100 border-[1px] border-emerald-400 rounded-lg shadow-xl p-4`}
       >
         <div className="flex gap-2 text-3xl font-bold text-emerald-600">
-          <VscExtensions /> {x?.blockHeight}{" "}
+          <VscExtensions /> {formatNum(x?.blockHeight)}
         </div>
         <div>{DateTime.fromISO(x?.dateTime).toRelative()}</div>
         <div>

@@ -11,3 +11,6 @@
     background: unset;
   }
 }
+::selection {
+  @apply bg-emerald-600
+}

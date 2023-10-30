@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { VscGlobe } from "@react-icons/all-files/vsc/VscGlobe";
 import { VscCreditCard } from "@react-icons/all-files/vsc/VscCreditCard";
+import { formatUSD, formatNum } from "@/ts/utils";
 
 const OverviewQuery = graphql`
   query OverviewQuery {
@@ -33,12 +34,6 @@ const Overview = () => {
   const [marketCap, setMarketCap] = useState<number>();
   const data = useLazyLoadQuery<OverviewQueryT>(OverviewQuery, {});
 
-  const formatUSD = (amount) =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(typeof amount === "string" ? Number(amount) : amount);
-
   const fetchPriceInfo = async () => {
     const client = new CoinGeckoClient({
       timeout: 10000,
@@ -50,7 +45,6 @@ const Overview = () => {
       vs_currencies: "usd",
       include_market_cap: true,
     });
-    console.log(price);
     setLastPrice(price["mina-protocol"].usd);
     setMarketCap(price["mina-protocol"].usd_market_cap);
   };
@@ -69,7 +63,7 @@ const Overview = () => {
         />
         <div className="flex flex-col">
           <div className="text-sm uppercase text-slate-600"> Mina price</div>
-          <div>{lastPrice && formatUSD(lastPrice)}</div>
+          <div>{formatUSD(lastPrice)}</div>
         </div>
       </div>
       <div className="flex items-center gap-2">
@@ -85,7 +79,7 @@ const Overview = () => {
           <div className="text-sm uppercase text-slate-600">
             Last finalized block
           </div>
-          <div>{data?.blocks[0]?.blockHeight}</div>
+          <div>{formatNum(data?.blocks[0]?.blockHeight)}</div>
         </div>
       </div>
     </div>
