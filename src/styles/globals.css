@@ -11,6 +11,9 @@
     background: unset;
   }
 }
+main>a {
+  @apply text-emerald-800
+}
 ::selection {
-  @apply bg-emerald-600
+  @apply bg-emerald-400
 }
