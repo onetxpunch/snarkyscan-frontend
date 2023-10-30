@@ -63,7 +63,10 @@ const Block = ({ blockHeight }: { blockHeight: number }) => {
           <span className="text-xl font-semibold text-gray-800">
             Fee Recipient:
           </span>{" "}
-          <Link href={`/address/${block.winnerAccount.publicKey}`}>
+          <Link
+            href={`/address/${block.winnerAccount.publicKey}`}
+            className="text-emerald-700 visited:text-emerald-800"
+          >
             {block.winnerAccount.publicKey.slice(0, 6) +
               "..." +
               block.winnerAccount.publicKey.slice(-6)}

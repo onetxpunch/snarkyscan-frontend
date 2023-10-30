@@ -9,7 +9,9 @@ const Home = () => {
   return (
     <>
       <NextSeo
-        title={`Snarkyscan | Address ${router.query.path}`}
+        title={`Snarkyscan | Address ${
+          router.query.path && router.query.path[0]
+        }`}
         additionalLinkTags={[
           {
             rel: "icon",
@@ -17,7 +19,7 @@ const Home = () => {
           },
         ]}
       />
-      {<Address address={address} />}
+      {address && <Address address={address} />}
     </>
   );
 };

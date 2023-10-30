@@ -1,7 +1,9 @@
 import { VscClippy } from "@react-icons/all-files/vsc/VscClippy";
 import { VscDeviceCamera } from "@react-icons/all-files/vsc/VscDeviceCamera";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { VscMortarBoard } from "@react-icons/all-files/vsc/VscMortarBoard";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Top = ({ address }) => {
   return (
@@ -92,14 +94,51 @@ const TipBlurb = () => {
   );
 };
 
+const AccountNav = ({ address }) => {
+  const router = useRouter();
+  return (
+    <div className="flex gap-2">
+      <Link
+        href={`/address/${address}`}
+        className="p-2 rounded-lg text-xs bg-slate-50 hover:bg-slate-100 border-[1px] border-slate-200"
+      >
+        Overview
+      </Link>
+      <Link
+        href={`/address/${address}/txns`}
+        className="p-2 rounded-lg hover:bg-slate-100 text-xs bg-slate-50 border-[1px] border-slate-200"
+      >
+        Transactions
+      </Link>
+    </div>
+  );
+};
+
+const TxnList = () => {
+  return <></>;
+};
+
 const Address = ({ address }) => {
+  const router = useRouter();
+  console.log(router, address);
   return (
     <div className="flex flex-col gap-4">
-      <Top address={address} />
-      <BalanceInfo />
-      <MoreInfo />
-      <OtherChains />
-      <TipBlurb />
+      <Suspense>
+        <Top address={address[0]} />
+        <AccountNav address={address[0]} />
+      </Suspense>
+      {address[1] === "txns" ? (
+        <>
+          <TxnList />
+        </>
+      ) : (
+        <>
+          <BalanceInfo />
+          <MoreInfo />
+          <OtherChains />
+          <TipBlurb />
+        </>
+      )}
     </div>
   );
 };
