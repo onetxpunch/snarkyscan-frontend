@@ -4,6 +4,7 @@ import { Suspense, useState } from "react";
 import { VscMortarBoard } from "@react-icons/all-files/vsc/VscMortarBoard";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Hint from "./Hint";
 
 const Top = ({ address }) => {
   return (
@@ -18,7 +19,7 @@ const Top = ({ address }) => {
         />
         <VscDeviceCamera className="hidden inline cursor-pointer hover:text-slate-800 text-slate-700" />
       </div>
-      <div className="text-sm bg-white border-[1px] border-slate-200 rounded-lg p-2 text-md">
+      <div className="text-sm bg-white border-[1px] border-slate-200 rounded-lg p-2 text-md font-mono">
         {address}
       </div>
     </div>
@@ -81,19 +82,6 @@ const OtherChains = ({}) => {
   );
 };
 
-const TipBlurb = () => {
-  return (
-    <div className="flex items-center gap-2 p-1 text-slate-600">
-      <VscMortarBoard className="w-6 h-6" />
-      <div className="text-xs">
-        A wallet address is a publicly available address that allows its owner
-        to receive funds from another party. To access the funds in an address,
-        you must have its private key.
-      </div>
-    </div>
-  );
-};
-
 const AccountNav = ({ address }) => {
   const router = useRouter();
   return (
@@ -136,7 +124,11 @@ const Address = ({ address }) => {
           <BalanceInfo />
           <MoreInfo />
           <OtherChains />
-          <TipBlurb />
+          <Hint
+            text={`A wallet address is a publicly available address that allows its owner
+        to receive funds from another party. To access the funds in an address,
+        you must have its private key.`}
+          />
         </>
       )}
     </div>

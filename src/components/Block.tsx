@@ -5,6 +5,7 @@ import { VscCheck } from "@react-icons/all-files/vsc/VscCheck";
 import Link from "next/link";
 import { VscChevronLeft } from "@react-icons/all-files/vsc/VscChevronLeft";
 import { VscChevronRight } from "@react-icons/all-files/vsc/VscChevronRight";
+import Hint from "./Hint";
 
 const BlockQuery = graphql`
   query BlockQuery($blockHeight: Int!) {
@@ -87,10 +88,11 @@ const Block = ({ blockHeight }: { blockHeight: number }) => {
             State Hash:
           </span>
         </div>{" "}
-        <div className="p-4 rounded border-[1px] border-slate-200 break-words bg-slate-100">
+        <div className="p-4 rounded border-[1px] border-slate-200 break-words bg-slate-100 font-mono">
           {block.stateHashField}
         </div>
       </div>
+      <Hint text={`Blocks are ...`} />
     </div>
   );
 };
