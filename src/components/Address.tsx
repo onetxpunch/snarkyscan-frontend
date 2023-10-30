@@ -1,6 +1,7 @@
 import { VscClippy } from "@react-icons/all-files/vsc/VscClippy";
 import { VscDeviceCamera } from "@react-icons/all-files/vsc/VscDeviceCamera";
 import { useState } from "react";
+import { VscMortarBoard } from "@react-icons/all-files/vsc/VscMortarBoard";
 
 const Top = ({ address }) => {
   return (
@@ -78,6 +79,19 @@ const OtherChains = ({}) => {
   );
 };
 
+const TipBlurb = () => {
+  return (
+    <div className="flex gap-2 p-1">
+      <VscMortarBoard className="w-8 h-8" />
+      <div className="text-xs">
+        A wallet address is a publicly available address that allows its owner
+        to receive funds from another party. To access the funds in an address,
+        you must have its private key.
+      </div>
+    </div>
+  );
+};
+
 const Address = ({ address }) => {
   return (
     <div className="flex flex-col gap-4">
@@ -85,6 +99,7 @@ const Address = ({ address }) => {
       <BalanceInfo />
       <MoreInfo />
       <OtherChains />
+      <TipBlurb />
     </div>
   );
 };
