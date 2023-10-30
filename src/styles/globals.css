@@ -5,3 +5,9 @@
 #__next {
   @apply w-full
 }
+@media (prefers-color-scheme: dark) {
+  body {
+    color: unset;
+    background: unset;
+  }
+}
