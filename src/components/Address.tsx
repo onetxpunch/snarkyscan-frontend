@@ -5,12 +5,15 @@ import { VscMortarBoard } from "@react-icons/all-files/vsc/VscMortarBoard";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Hint from "./Hint";
+import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 
 const Top = ({ address }) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-2 text-2xl">
-        <div className="font-semibold">Address</div>
+        <div className="font-semibold">
+          <Jazzicon seed={jsNumberForAddress(address)} /> Address
+        </div>
         <VscClippy
           className="inline cursor-pointer hover:text-slate-800 text-slate-700"
           onClick={() => {
