@@ -25,12 +25,12 @@ export default function App({
   }, [environment, pageProps.initialRecords]);
 
   return (
-    <RelayEnvironmentProvider environment={environment}>
-      <Nav />
-      <div className="p-8">
-        <Component {...pageProps} />
-      </div>
-      <Footer />
-    </RelayEnvironmentProvider>
+    <>
+      <RelayEnvironmentProvider environment={environment}>
+        <div className="p-8">
+          <Component {...pageProps} />
+        </div>
+      </RelayEnvironmentProvider>
+    </>
   );
 }

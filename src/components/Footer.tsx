@@ -4,9 +4,9 @@ const Footer = () => {
   return (
     <footer className="p-4 bg-emerald-950 rounded-t-xl sm:p-6">
       <div className="max-w-screen-xl mx-auto">
-        <div className="md:flex md:justify-between">
+        <div className="gap-8 md:flex md:justify-between">
           <div className="flex flex-col gap-2 mb-6 md:mb-0">
-            <Link href="/" className="flex items-center gap-2">
+            <Link key="home" href="/" className="flex items-center gap-2">
               <img
                 src="/snarkyscanicon.png"
                 className="object-contain w-8 h-8"
@@ -20,7 +20,7 @@ const Footer = () => {
               contracts platform based on zero knowledge proofs.
             </div>
           </div>
-          <div className="grid w-full grid-cols-3 gap-8 sm:w-2/5 sm:gap-6 sm:grid-cols-3">
+          <div className="grid w-full grid-cols-3 gap-8 sm:w-1/2 sm:gap-6 sm:grid-cols-3">
             <div>
               <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                 Policy
@@ -45,7 +45,7 @@ const Footer = () => {
               <ul className="text-gray-600 dark:text-gray-400">
                 <li className="mb-4">
                   <a href="https://github.com" className="hover:underline">
-                    Documentation
+                    Docs
                   </a>
                 </li>
                 <li>

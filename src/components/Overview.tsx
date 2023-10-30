@@ -37,7 +37,7 @@ const Overview = () => {
     new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
-    }).format(amount);
+    }).format(typeof amount === "string" ? Number(amount) : amount);
 
   const fetchPriceInfo = async () => {
     const client = new CoinGeckoClient({
@@ -69,7 +69,7 @@ const Overview = () => {
         />
         <div className="flex flex-col">
           <div className="text-sm uppercase text-slate-600"> Mina price</div>
-          <div>{formatUSD(lastPrice)}</div>
+          <div>{lastPrice && formatUSD(lastPrice)}</div>
         </div>
       </div>
       <div className="flex items-center gap-2">
