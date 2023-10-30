@@ -9,7 +9,7 @@ export default function Document() {
       <body>
         <Nav />
         <main
-          className={`flex min-h-screen container mx-auto flex-col items-center justify-between`}
+          className={`flex min-h-screen container mx-auto flex-col items-center justify-between max-w-5xl`}
         >
           <Main />
         </main>

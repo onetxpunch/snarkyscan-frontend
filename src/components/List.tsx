@@ -40,10 +40,9 @@ const Card = ({ x }) => {
         <div>{DateTime.fromISO(x?.dateTime).toRelative()}</div>
         <div>
           Miner:{" "}
-          <Link href={`/address/${x.creator}`}>
-            {" "}
-            {x?.creator.slice(0, 6) + "..." + x?.creator.slice(-6)}
-          </Link>{" "}
+          {/* <Link key={`/address/${x.creator}`} href={`/address/${x.creator}`}> */}
+          {x?.creator.slice(0, 6) + "..." + x?.creator.slice(-6)}
+          {/* </Link>{" "} */}
         </div>
         <div>Snark Rewards: {x?.snarkFees / 10 ** 9} MINA</div>
       </div>

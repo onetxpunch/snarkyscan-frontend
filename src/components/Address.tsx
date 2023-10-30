@@ -81,8 +81,8 @@ const OtherChains = ({}) => {
 
 const TipBlurb = () => {
   return (
-    <div className="flex gap-2 p-1">
-      <VscMortarBoard className="w-8 h-8" />
+    <div className="flex items-center gap-2 p-1 text-slate-600">
+      <VscMortarBoard className="w-6 h-6" />
       <div className="text-xs">
         A wallet address is a publicly available address that allows its owner
         to receive funds from another party. To access the funds in an address,
