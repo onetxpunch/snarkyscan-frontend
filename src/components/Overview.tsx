@@ -29,8 +29,8 @@ const OverviewQuery = graphql`
   }
 `;
 const Overview = () => {
-  const [lastPrice, setLastPrice] = useState();
-  const [marketCap, setMarketCap] = useState();
+  const [lastPrice, setLastPrice] = useState<number>();
+  const [marketCap, setMarketCap] = useState<number>();
   const data = useLazyLoadQuery<OverviewQueryT>(OverviewQuery, {});
 
   const formatUSD = (amount) =>
@@ -85,7 +85,7 @@ const Overview = () => {
           <div className="text-sm uppercase text-slate-600">
             Last finalized block
           </div>
-          <div>{data.blocks[0].blockHeight}</div>
+          <div>{data?.blocks[0]?.blockHeight}</div>
         </div>
       </div>
     </div>

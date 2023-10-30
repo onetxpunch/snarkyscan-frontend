@@ -9,7 +9,7 @@ import {
 const HTTP_ENDPOINT = process.env.NEXT_PUBLIC_API_URL;
 
 const fetchFn: FetchFunction = async (request, variables) => {
-  const resp = await fetch(HTTP_ENDPOINT, {
+  const resp = await fetch(HTTP_ENDPOINT ?? "", {
     method: "POST",
     headers: {
       Accept:

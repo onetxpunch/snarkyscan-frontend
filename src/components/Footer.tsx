@@ -1,10 +1,12 @@
+import Link from "next/link";
+
 const Footer = () => {
   return (
     <footer className="p-4 bg-emerald-950 rounded-t-xl sm:p-6">
       <div className="max-w-screen-xl mx-auto">
         <div className="md:flex md:justify-between">
           <div className="flex flex-col gap-2 mb-6 md:mb-0">
-            <a href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2">
               <img
                 src="/snarkyscanicon.png"
                 className="object-contain w-8 h-8"
@@ -12,7 +14,7 @@ const Footer = () => {
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                 Snarkyscan Explorer
               </span>
-            </a>
+            </Link>
             <div className="text-sm text-slate-100">
               Snarkyscan is a block explorer for Mina, a decentralized smart
               contracts platform based on zero knowledge proofs.
