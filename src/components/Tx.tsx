@@ -92,7 +92,7 @@ const Tx = ({ tx }) => {
             className="flex gap-2 text-emerald-600"
           >
             {/* {DateTime.fromISO(block.dateTime).toRelative()} ({block.dateTime}) */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               <VscHistory /> {formatNum(transaction.blockHeight)}
             </div>
             <div className="text-sm p-2 bg-slate-100 border-slate-200 border-[1px] rounded-lg text-slate-700 font-semibold">
@@ -110,7 +110,7 @@ const Tx = ({ tx }) => {
           <span className="w-48 text-xl font-semibold text-gray-800">
             Timestamp:
           </span>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <VscWatch /> {DateTime.fromISO(transaction.dateTime).toRelative()} (
             {DateTime.fromISO(transaction.dateTime).toLocaleString(
               DateTime.DATETIME_FULL
@@ -118,6 +118,7 @@ const Tx = ({ tx }) => {
             )
           </div>
         </div>
+        <hr />
         <div className="flex items-center gap-2">
           <span className="w-48 text-xl font-semibold text-gray-800">
             From:
@@ -138,6 +139,7 @@ const Tx = ({ tx }) => {
             {transaction.receiver.publicKey}
           </Link>
         </div>
+        <hr />
         <div className="flex items-center gap-2">
           <span className="w-48 text-xl font-semibold text-gray-800">
             Value:

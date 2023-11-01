@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 const Footer = () => {
+  const year = new Date().getFullYear();
   return (
     <footer className="p-4 bg-emerald-950 rounded-t-xl sm:p-6">
       <div className="max-w-screen-xl mx-auto">
@@ -27,14 +28,14 @@ const Footer = () => {
               </h2>
               <ul className="text-gray-600 dark:text-gray-400">
                 <li className="mb-4">
-                  <a href="/privacy" className="hover:underline">
+                  <Link href="/privacy" className="hover:underline">
                     Privacy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/usage" className="hover:underline">
+                  <Link href="/usage" className="hover:underline">
                     Usage
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -77,7 +78,7 @@ const Footer = () => {
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-            {new Date().getFullYear()} - Snarkyscan.com
+            {year} - Snarkyscan.com
           </span>
         </div>
       </div>
