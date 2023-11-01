@@ -8,6 +8,7 @@ import Hint from "./Hint";
 import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 import { graphql } from "relay-runtime";
 import { useLazyLoadQuery } from "react-relay";
+import { DateTime } from "luxon";
 
 const Top = ({ address }) => {
   return (
@@ -109,7 +110,10 @@ const AccountNav = ({ address }) => {
 
 const TxnListQuery = graphql`
   query AddressTxnListQuery($from: String!) {
-    transactions(query: { from: $from }) {
+    transactions(
+      query: { from: $from, canonical: true }
+      sortBy: DATETIME_DESC
+    ) {
       amount
       blockHeight
       canonical
@@ -139,15 +143,68 @@ const TxnListQuery = graphql`
   }
 `;
 
+const TxnLink = (data) => {
+  return (
+    <div className="flex justify-between gap-4">
+      <Link
+        className="col-span-3 text-emerald-600 hover:text-emerald-500"
+        href={`/tx/${data.hash}`}
+      >
+        {data.hash.slice(0, 16)}
+      </Link>
+
+      <Link
+        className="col-span-3 text-emerald-600 hover:text-emerald-500"
+        href={`/block/${data.blockHeight}`}
+      >
+        {data.blockHeight}
+      </Link>
+      <div className="col-span-1">
+        {DateTime.fromISO(data.dateTime).toRelative()}
+      </div>
+
+      <Link
+        className="col-span-3 text-emerald-600 hover:text-emerald-500"
+        href={`/address/${data.from}`}
+      >
+        {data.from.slice(0, 8)}
+      </Link>
+      <div className="absolute -ml-6 left-3/4">
+        {data.from === data.address ? "IN" : "OUT"}
+      </div>
+      <Link
+        className="col-span-3 text-emerald-600 hover:text-emerald-500"
+        href={`/address/${data.to}`}
+      >
+        {data.to.slice(0, 8)}
+      </Link>
+    </div>
+  );
+};
+
 const TxnList = ({ address }) => {
-  const data = [];
-  const data2 = useLazyLoadQuery<any>(TxnListQuery, { from: address });
+  const data = useLazyLoadQuery<any>(TxnListQuery, { from: address });
 
   const [minaBalance, setMinaBalance] = useState<number>();
   return (
     <div className="p-4 bg-white flex flex-col gap-3 border-slate-200 rounded-lg border-[1px]">
-      <div className="text-lg">
-        A total of {data.length} transactions were found.
+      <div className="text-lg ">
+        A total of {data.transactions.length} transactions were found.
+      </div>
+      <div className="flex flex-col">
+        <div className="flex justify-between gap-4 font-semibold">
+          <div>Transaction Hash</div>
+          {/* <div>Action</div> */}
+          <div>Block</div>
+          <div>Age</div>
+          <div>From</div>
+          <div>To</div>
+        </div>
+        {/* <div>Value</div> */}
+        {/* <div>Fee</div> */}
+        {data?.transactions?.map((x) => (
+          <TxnLink key={x.hash} {...x} address={address} />
+        ))}
       </div>
     </div>
   );

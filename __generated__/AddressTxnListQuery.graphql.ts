@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<47c8725a5f5c3e035c2db936800ae95d>>
+ * @generated SignedSource<<d3126ec13690dafd61de5079a5ac6551>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -71,6 +71,11 @@ v3 = [
       {
         "fields": [
           {
+            "kind": "Literal",
+            "name": "canonical",
+            "value": true
+          },
+          {
             "kind": "Variable",
             "name": "from",
             "variableName": "from"
@@ -78,6 +83,11 @@ v3 = [
         ],
         "kind": "ObjectValue",
         "name": "query"
+      },
+      {
+        "kind": "Literal",
+        "name": "sortBy",
+        "value": "DATETIME_DESC"
       }
     ],
     "concreteType": "Transaction",
@@ -243,16 +253,16 @@ return {
     "selections": (v3/*: any*/)
   },
   "params": {
-    "cacheID": "69c08aec051a1a62fa6641eec2c5a920",
+    "cacheID": "cb745cb821769879e92b5d48cf4702dd",
     "id": null,
     "metadata": {},
     "name": "AddressTxnListQuery",
     "operationKind": "query",
-    "text": "query AddressTxnListQuery(\n  $from: String!\n) {\n  transactions(query: {from: $from}) {\n    amount\n    blockHeight\n    canonical\n    dateTime\n    failureReason\n    fee\n    feeToken\n    from\n    hash\n    id\n    isDelegation\n    kind\n    memo\n    nonce\n    to\n    toAccount {\n      token\n    }\n    token\n    fromAccount {\n      token\n    }\n    feePayer {\n      token\n    }\n  }\n}\n"
+    "text": "query AddressTxnListQuery(\n  $from: String!\n) {\n  transactions(query: {from: $from, canonical: true}, sortBy: DATETIME_DESC) {\n    amount\n    blockHeight\n    canonical\n    dateTime\n    failureReason\n    fee\n    feeToken\n    from\n    hash\n    id\n    isDelegation\n    kind\n    memo\n    nonce\n    to\n    toAccount {\n      token\n    }\n    token\n    fromAccount {\n      token\n    }\n    feePayer {\n      token\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e828c1e5073522946ae325957f73e92b";
+(node as any).hash = "03808064ba2d47bd7fd811815cf5741e";
 
 export default node;
