@@ -46,14 +46,16 @@ const Block = ({ blockHeight }: { blockHeight: number }) => {
       </h2>
       <div className="p-4 bg-white border-[1px] rounded-xl flex flex-col gap-4">
         <div className="flex items-center gap-2">
-          <span className="text-xl font-semibold text-gray-800">Status:</span>
+          <span className="w-48 text-xl font-semibold text-gray-800">
+            Status:
+          </span>
           <div className="text-green-600 p-2 border-[1px] border-green-600 bg-green-100 rounded flex gap-2 text-sm items-center">
             <VscCheck className="w-5 h-5 text-emerald-800" />{" "}
             <div>Finalized</div>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xl font-semibold text-gray-800">
+          <span className="w-48 text-xl font-semibold text-gray-800">
             Timestamp:
           </span>
           <div>
@@ -61,7 +63,7 @@ const Block = ({ blockHeight }: { blockHeight: number }) => {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xl font-semibold text-gray-800">
+          <span className="w-48 text-xl font-semibold text-gray-800">
             Fee Recipient:
           </span>{" "}
           <Link
@@ -74,11 +76,13 @@ const Block = ({ blockHeight }: { blockHeight: number }) => {
           </Link>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xl font-semibold text-gray-800">Tx Fees:</span>{" "}
+          <span className="w-48 text-xl font-semibold text-gray-800">
+            Tx Fees:
+          </span>{" "}
           <span>{block.txFees / 10 ** 9} MINA</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xl font-semibold text-gray-800">
+          <span className="w-48 text-xl font-semibold text-gray-800">
             Snark Worker Fees:
           </span>{" "}
           <span>{block.snarkFees / 10 ** 9} MINA</span>
