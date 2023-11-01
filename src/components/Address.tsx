@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Hint from "./Hint";
 import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
+import { graphql } from "relay-runtime";
+import { useLazyLoadQuery } from "react-relay";
 
 const Top = ({ address }) => {
   return (
@@ -105,8 +107,42 @@ const AccountNav = ({ address }) => {
   );
 };
 
-const TxnList = () => {
+const TxnListQuery = graphql`
+  query AddressTxnListQuery($from: String!) {
+    transactions(query: { from: $from }) {
+      amount
+      blockHeight
+      canonical
+      dateTime
+      failureReason
+      fee
+      feeToken
+      from
+      hash
+      id
+      isDelegation
+      kind
+      memo
+      nonce
+      to
+      toAccount {
+        token
+      }
+      token
+      fromAccount {
+        token
+      }
+      feePayer {
+        token
+      }
+    }
+  }
+`;
+
+const TxnList = ({ address }) => {
   const data = [];
+  const data2 = useLazyLoadQuery<any>(TxnListQuery, { from: address });
+
   const [minaBalance, setMinaBalance] = useState<number>();
   return (
     <div className="p-4 bg-white flex flex-col gap-3 border-slate-200 rounded-lg border-[1px]">
@@ -128,7 +164,7 @@ const Address = ({ address }) => {
       </Suspense>
       {address[1] === "txns" ? (
         <>
-          <TxnList />
+          <TxnList address={address[0]} />
         </>
       ) : (
         <>
