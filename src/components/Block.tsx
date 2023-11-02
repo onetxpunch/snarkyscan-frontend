@@ -6,6 +6,7 @@ import Link from "next/link";
 import { VscChevronLeft } from "@react-icons/all-files/vsc/VscChevronLeft";
 import { VscChevronRight } from "@react-icons/all-files/vsc/VscChevronRight";
 import Hint from "./Hint";
+import { useRouter } from "next/router";
 
 const BlockQuery = graphql`
   query BlockQuery($blockHeight: Int!) {
@@ -29,21 +30,29 @@ const BlockQuery = graphql`
   }
 `;
 
-const Block = ({ blockHeight }: { blockHeight: number }) => {
-  const { block } = useLazyLoadQuery<any>(BlockQuery, { blockHeight });
+const BlockNav = ({ blockHeight }) => {
+  const router = useRouter();
   return (
-    <div className="flex flex-col gap-2">
-      <h2 className="mb-4 text-3xl">
-        <span className="font-black">Block</span> #{block.blockHeight}{" "}
-        <div className="inline-flex gap-2">
-          <Link href={`/block/${blockHeight - 1}`}>
-            <VscChevronLeft className="bg-slate-200 text-slate-800 hover:text-emerald-800 rounded-lg border-[1px] border-slate-400 hover:bg-slate-100 cursor-pointer" />
-          </Link>
-          <Link href={`/block/${blockHeight + 1}`}>
-            <VscChevronRight className="bg-slate-200 text-slate-800 hover:text-emerald-800 rounded-lg border-[1px] border-slate-400 hover:bg-slate-100 cursor-pointer" />
-          </Link>
-        </div>
-      </h2>
+    <div className="flex gap-2">
+      <Link
+        href={`/block/${blockHeight}`}
+        className={`p-2 rounded-lg text-xs bg-slate-50 hover:bg-slate-100 border-[1px] border-slate-200`}
+      >
+        Overview
+      </Link>
+      <Link
+        href={`/block/${blockHeight}/txns`}
+        className={`p-2 rounded-lg hover:bg-slate-100 text-xs bg-slate-50 border-[1px] border-slate-200`}
+      >
+        Transactions
+      </Link>
+    </div>
+  );
+};
+
+const BlockOverview = ({ block }) => {
+  return (
+    <>
       <div className="p-4 bg-white border-[1px] rounded-xl flex flex-col gap-4">
         <div className="flex items-center gap-2">
           <span className="w-48 text-xl font-semibold text-gray-800">
@@ -70,9 +79,7 @@ const Block = ({ blockHeight }: { blockHeight: number }) => {
             href={`/address/${block.winnerAccount.publicKey}`}
             className="text-emerald-700 visited:text-emerald-800"
           >
-            {block.winnerAccount.publicKey.slice(0, 6) +
-              "..." +
-              block.winnerAccount.publicKey.slice(-6)}
+            {block.winnerAccount.publicKey}
           </Link>
         </div>
         <div className="flex items-center gap-2">
@@ -97,6 +104,39 @@ const Block = ({ blockHeight }: { blockHeight: number }) => {
         </div>
       </div>
       <Hint text={`Blocks are ...`} />
+    </>
+  );
+};
+
+const Block = ({
+  blockHeight,
+  route,
+}: {
+  blockHeight: number;
+  route?: string;
+}) => {
+  const { block } = useLazyLoadQuery<any>(BlockQuery, { blockHeight });
+  return (
+    <div className="flex flex-col gap-2">
+      <h2 className="flex items-center gap-2 mb-4 text-3xl">
+        <span className="font-black">Block</span> #{block.blockHeight}{" "}
+        <div className="inline-flex gap-2">
+          <Link href={`/block/${blockHeight - 1}`}>
+            <VscChevronLeft className="bg-slate-200 text-slate-800 hover:text-emerald-800 rounded-lg border-[1px] border-slate-400 hover:bg-slate-100 cursor-pointer" />
+          </Link>
+          <Link href={`/block/${blockHeight + 1}`}>
+            <VscChevronRight className="bg-slate-200 text-slate-800 hover:text-emerald-800 rounded-lg border-[1px] border-slate-400 hover:bg-slate-100 cursor-pointer" />
+          </Link>
+        </div>
+      </h2>
+      <BlockNav blockHeight={blockHeight} />
+      {route === "txns" ? (
+        <>{/* <TxnList address={address[0]} /> */}</>
+      ) : (
+        <>
+          <BlockOverview block={block} />
+        </>
+      )}
     </div>
   );
 };

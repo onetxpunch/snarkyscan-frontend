@@ -2,7 +2,7 @@ import { CoinGeckoClient } from "coingecko-api-v3";
 import { graphql } from "relay-runtime";
 import { useLazyLoadQuery } from "react-relay";
 import { OverviewQuery as OverviewQueryT } from "../../__generated__/OverviewQuery.graphql";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useEffect } from "react";
 import { VscGlobe } from "@react-icons/all-files/vsc/VscGlobe";
 import { VscCreditCard } from "@react-icons/all-files/vsc/VscCreditCard";
@@ -29,9 +29,13 @@ const OverviewQuery = graphql`
     }
   }
 `;
-const Overview = () => {
-  const [lastPrice, setLastPrice] = useState<number>();
-  const [marketCap, setMarketCap] = useState<number>();
+const Overview = ({ price }: { price? }) => {
+  const [lastPrice, setLastPrice] = useState<string>(
+    formatUSD(price["mina-protocol"].usd)
+  );
+  const [marketCap, setMarketCap] = useState<string>(
+    formatUSD(price["mina-protocol"].usd_market_cap)
+  );
   const data = useLazyLoadQuery<OverviewQueryT>(OverviewQuery, {});
 
   const fetchPriceInfo = async () => {
@@ -45,12 +49,12 @@ const Overview = () => {
       vs_currencies: "usd",
       include_market_cap: true,
     });
-    setLastPrice(price["mina-protocol"].usd);
-    setMarketCap(price["mina-protocol"].usd_market_cap);
+    setLastPrice(formatUSD(price["mina-protocol"].usd));
+    setMarketCap(formatUSD(price["mina-protocol"].usd_market_cap));
   };
 
   useEffect(() => {
-    fetchPriceInfo();
+    if (!lastPrice && !price) fetchPriceInfo();
   }, []);
 
   return (
@@ -63,14 +67,18 @@ const Overview = () => {
         />
         <div className="flex flex-col">
           <div className="text-sm uppercase text-slate-600"> Mina price</div>
-          <div>{formatUSD(lastPrice)}</div>
+          <div>
+            <Suspense fallback={<>000</>}>{lastPrice}</Suspense>
+          </div>
         </div>
       </div>
       <div className="flex items-center gap-2">
         <VscGlobe className="w-8 h-8 text-slate-800" />
         <div className="flex flex-col">
           <div className="text-sm uppercase text-slate-600">Market cap</div>
-          <div>{formatUSD(marketCap)}</div>
+          <div>
+            <Suspense fallback={<>000</>}>{marketCap}</Suspense>
+          </div>
         </div>
       </div>
       <div className="flex items-center gap-2">
@@ -79,7 +87,11 @@ const Overview = () => {
           <div className="text-sm uppercase text-slate-600">
             Last finalized block
           </div>
-          <div>{formatNum(data?.blocks[0]?.blockHeight)}</div>
+          <div>
+            <Suspense fallback={<>000</>}>
+              {formatNum(data?.blocks[0]?.blockHeight)}
+            </Suspense>
+          </div>
         </div>
       </div>
     </div>
