@@ -45,7 +45,10 @@ const Footer = () => {
               </h2>
               <ul className="text-gray-600 dark:text-gray-400">
                 <li className="mb-4">
-                  <a href="https://github.com" className="hover:underline">
+                  <a
+                    href="https://docs.snarkyscan.com"
+                    className="hover:underline"
+                  >
                     Docs
                   </a>
                 </li>
@@ -67,7 +70,10 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="https://discord.gg/" className="hover:underline">
+                  <a
+                    href="https://discord.gg/mF2KtH2C"
+                    className="hover:underline"
+                  >
                     Discord
                   </a>
                 </li>
