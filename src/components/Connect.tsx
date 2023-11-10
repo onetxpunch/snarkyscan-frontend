@@ -13,13 +13,15 @@ export const Connect = () => {
     }
   };
 
+
+
   return (
     <>
       {connectData ? (
         <>
           <Link
             href={`/address/${connectData[0]}`}
-            className="p-4 text-lg rounded-lg bg-emerald-400 hover:bg-emerald-300 hover:cursor-pointer"
+            className="p-4 text-xs rounded-lg bg-emerald-400 hover:bg-emerald-300 hover:cursor-pointer"
           >
             {connectData[0]}
           </Link>
@@ -27,7 +29,7 @@ export const Connect = () => {
       ) : (
         <>
           <div
-            className="p-4 text-lg rounded-lg bg-emerald-400 hover:bg-emerald-300 hover:cursor-pointer"
+            className="p-4 text-base rounded-lg bg-emerald-400 hover:bg-emerald-300 hover:cursor-pointer"
             onClick={tryConnect}
           >
             Connect

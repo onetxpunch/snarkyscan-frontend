@@ -1,6 +1,6 @@
 import { VscClippy } from "@react-icons/all-files/vsc/VscClippy";
 import { VscDeviceCamera } from "@react-icons/all-files/vsc/VscDeviceCamera";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { VscMortarBoard } from "@react-icons/all-files/vsc/VscMortarBoard";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -9,6 +9,13 @@ import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 import { graphql } from "relay-runtime";
 import { useLazyLoadQuery } from "react-relay";
 import { DateTime } from "luxon";
+import {
+  setGraphqlEndpoints,
+  fetchAccount,
+  PublicKey,
+  Types,
+  Mina,
+} from "o1js";
 
 const Top = ({ address }) => {
   return (
@@ -32,45 +39,66 @@ const Top = ({ address }) => {
   );
 };
 
-const BalanceInfo = ({}) => {
+const BalanceInfo = ({ address, noAccount, setNoAccount }) => {
   const [minaBalance, setMinaBalance] = useState<number>();
+
+  useEffect(() => {
+    const t = async () => {
+      if (!process.env.NEXT_PUBLIC_API_URL) return;
+      const publicKey = PublicKey.fromBase58(address);
+      setGraphqlEndpoints([process.env.NEXT_PUBLIC_API_URL]);
+      let { account, error } = await fetchAccount({
+        publicKey,
+      });
+      if (error) {
+        console.log("error", error);
+        setNoAccount(true);
+      } else if (account) {
+        const res = Types.Account.toJSON(account!);
+        console.log("account", res);
+      }
+    };
+    if (address) t();
+  }, [address]);
+
   return (
     <div className="p-4 bg-white flex flex-col gap-3 border-slate-200 rounded-lg border-[1px]">
       <div className="text-lg">Overview</div>
       <div className="flex flex-col gap-1">
         <div className="text-sm uppercase text-slate-600">Mina Balance</div>
-        <div>
+        <div className="flex gap-2">
           <img
             alt="mina logo"
             src="/mina-logo.png"
             className="w-5 h-5 rounded-full text-slate-800"
           />
-          {minaBalance}
+          {noAccount ? "0" : minaBalance}
         </div>
       </div>
 
       <div className="flex flex-col gap-1">
         <div className="text-sm uppercase text-slate-600">Mina Value</div>
-        <div>${minaBalance}</div>
+        <div>${noAccount ? "0.00" : minaBalance}</div>
       </div>
     </div>
   );
 };
 
-const MoreInfo = ({}) => {
+const MoreInfo = ({ noAccount }) => {
   const [minaBalance, setMinaBalance] = useState<number>();
   return (
     <div className="p-4 bg-white flex flex-col gap-3 border-slate-200 rounded-lg border-[1px]">
       <div className="text-lg">More Info</div>
       <div className="flex flex-col gap-1">
         <div className="text-sm uppercase text-slate-600">Last sent</div>
-        <div>{minaBalance}</div>
+        <div>{noAccount ? "No activity" : minaBalance}</div>
       </div>
-
-      <div className="flex flex-col gap-1">
-        <div className="text-sm uppercase text-slate-600">First sent</div>
-        <div>{minaBalance}</div>
-      </div>
+      {!noAccount && (
+        <div className="flex flex-col gap-1">
+          <div className="text-sm uppercase text-slate-600">First sent</div>
+          <div>{minaBalance}</div>
+        </div>
+      )}
     </div>
   );
 };
@@ -212,6 +240,8 @@ const TxnList = ({ address }) => {
 
 const Address = ({ address }) => {
   const router = useRouter();
+
+  const [noAccount, setNoAccount] = useState(false);
   console.log(router, address);
   return (
     <div className="flex flex-col gap-4">
@@ -225,8 +255,12 @@ const Address = ({ address }) => {
         </>
       ) : (
         <>
-          <BalanceInfo />
-          <MoreInfo />
+          <BalanceInfo
+            address={address[0]}
+            noAccount={noAccount}
+            setNoAccount={setNoAccount}
+          />
+          <MoreInfo noAccount={noAccount} />
           <OtherChains />
           <Hint
             text={`A wallet address is a publicly available address that allows its owner
