@@ -26,12 +26,13 @@ export default function App({
 
   return (
     <>
+      <Nav />
       <RelayEnvironmentProvider environment={environment}>
-        <div className="p-8">
+        <div className="container flex-col items-center justify-between max-w-5xl p-8 mx-auto">
           <Component {...pageProps} />
         </div>
-        {/* <Footer /> */}
       </RelayEnvironmentProvider>
+      {/* <Footer /> */}
     </>
   );
 }
