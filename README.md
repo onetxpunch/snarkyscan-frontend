@@ -1,6 +1,6 @@
 # 🟩💎 Snarkyscan.com
 
-![](./public/mina-logo.png)  ![](./public/snarkyscan-logo.png)
+[![](./public/mina-logo.png)](https://minaprotocol.com)  [![](./public/snarkyscan-logo.png)](https://snarkyscan.com)
 
 [![.github/workflows/docker.yml](https://github.com/onetxpunch/snarkyscan-frontend/actions/workflows/docker.yml/badge.svg)](https://github.com/onetxpunch/snarkyscan-frontend/actions/workflows/docker.yml)
 
@@ -8,7 +8,7 @@
 
 [Snarkyscan](https://snarkyscan.com) is an open source block explorer for [Mina](https://minaprotocol.com) protocol that you can selfhost and explore information about Mina accounts and ZkApps deployed on different networks.
 
-- [�💎 Snarkyscan.com](#-snarkyscancom)
+- [🟩💎 Snarkyscan.com](#-snarkyscancom)
 	- [Overview](#overview)
 	- [Getting Started](#getting-started)
 		- [Canonical URLs](#canonical-urls)
@@ -53,12 +53,12 @@ Deploying Snarkyscan is easy with Docker. Images are published from the latest b
 ### Docker
 
 ```bash
-docker run - --rm -p 80:3000 ghcr.io/onetxpunch/snarkyscan:develop
+docker run -e NEXT_PUBLIC_API_URL= --rm -p 80:3000 ghcr.io/onetxpunch/snarkyscan:develop
 ```
 
 ### Docker-compose
 
-A reference docker-compose.yml for your application could look like the following:
+A  docke-compose.yml for your deployment could look like the following:
 
 ```yml
 services:
