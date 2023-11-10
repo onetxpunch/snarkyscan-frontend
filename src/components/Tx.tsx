@@ -8,6 +8,7 @@ import { VscWatch } from "@react-icons/all-files/vsc/VscWatch";
 import { VscHistory } from "@react-icons/all-files/vsc/VscHistory";
 import { Suspense } from "react";
 import { formatNum } from "@/ts/utils";
+import { VscDebugPause } from "@react-icons/all-files/vsc/VscDebugPause";
 
 const TxQuery = graphql`
   query TxQuery($hash: String!) {
@@ -79,42 +80,61 @@ const Tx = ({ tx }) => {
           <span className="w-48 text-xl font-semibold text-gray-800">
             Status:
           </span>
-          <div className="text-green-600 p-2 border-[1px] border-green-600 bg-green-100 rounded flex gap-2 text-sm items-center">
-            <VscCheck className="w-5 h-5 text-emerald-800" /> <div>Success</div>
+          {transaction ? (
+            <div className="text-green-600 p-2 border-[1px] border-green-600 bg-green-100 rounded flex gap-2 text-sm items-center">
+              <VscCheck className="w-5 h-5 text-emerald-800" />{" "}
+              <div>Success</div>
+            </div>
+          ) : (
+            <>
+              <div className="text-sm  flex p-2 bg-orange-100 border-slate-200 border-[1px] rounded-lg items-center gap-2 text-orange-700 font-semibold">
+                <VscDebugPause />
+                <div>Unconfirmed</div>
+              </div>
+            </>
+          )}
+        </div>
+        {transaction && (
+          <div className="flex items-center gap-2">
+            <span className="w-48 text-xl font-semibold text-gray-800">
+              Block:
+            </span>
+            <Link
+              href={`/block/${transaction?.blockHeight}`}
+              className="flex gap-2 text-emerald-600"
+            >
+              {/* {DateTime.fromISO(block.dateTime).toRelative()} ({block.dateTime}) */}
+              {transaction && (
+                <div className="flex items-center gap-1">
+                  <VscHistory /> {formatNum(transaction?.blockHeight)}
+                </div>
+              )}
+              {
+                <div className="text-sm p-2 bg-slate-100 border-slate-200 border-[1px] rounded-lg text-slate-700 font-semibold">
+                  <Suspense>
+                    {formatNum(
+                      Number(latestBlock.blockHeight) -
+                        Number(transaction?.blockHeight)
+                    )}
+                  </Suspense>{" "}
+                  Block Confirmations
+                </div>
+              }
+            </Link>
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-48 text-xl font-semibold text-gray-800">
-            Block:
-          </span>
-          <Link
-            href={`/block/${transaction.blockHeight}`}
-            className="flex gap-2 text-emerald-600"
-          >
-            {/* {DateTime.fromISO(block.dateTime).toRelative()} ({block.dateTime}) */}
-            <div className="flex items-center gap-1">
-              <VscHistory /> {formatNum(transaction.blockHeight)}
-            </div>
-            <div className="text-sm p-2 bg-slate-100 border-slate-200 border-[1px] rounded-lg text-slate-700 font-semibold">
-              <Suspense>
-                {formatNum(
-                  Number(latestBlock.blockHeight) -
-                    Number(transaction.blockHeight)
-                )}
-              </Suspense>{" "}
-              Block Confirmations
-            </div>
-          </Link>
-        </div>
+        )}
         <div className="flex items-center gap-2">
           <span className="w-48 text-xl font-semibold text-gray-800">
             Timestamp:
           </span>
           <div className="flex items-center gap-1">
-            <VscWatch /> {DateTime.fromISO(transaction.dateTime).toRelative()} (
-            {DateTime.fromISO(transaction.dateTime).toLocaleString(
-              DateTime.DATETIME_FULL
-            )}
+            <VscWatch /> {DateTime.fromISO(transaction?.dateTime).toRelative()}{" "}
+            (
+            {transaction
+              ? DateTime.fromISO(transaction?.dateTime).toLocaleString(
+                  DateTime.DATETIME_FULL
+                )
+              : "Awaiting confirmation"}
             )
           </div>
         </div>
@@ -124,19 +144,19 @@ const Tx = ({ tx }) => {
             From:
           </span>{" "}
           <Link
-            href={`/address/${transaction.source.publicKey}`}
+            href={`/address/${transaction?.source.publicKey}`}
             className="text-emerald-700 visited:text-emerald-800"
           >
-            {transaction.source.publicKey}
+            {transaction?.source.publicKey}
           </Link>
         </div>
         <div className="flex items-center gap-2">
           <span className="w-48 text-xl font-semibold text-gray-800">To:</span>{" "}
           <Link
-            href={`/address/${transaction.receiver.publicKey}`}
+            href={`/address/${transaction?.receiver.publicKey}`}
             className="text-emerald-700 visited:text-emerald-800"
           >
-            {transaction.receiver.publicKey}
+            {transaction?.receiver.publicKey}
           </Link>
         </div>
         <hr />
@@ -144,13 +164,13 @@ const Tx = ({ tx }) => {
           <span className="w-48 text-xl font-semibold text-gray-800">
             Value:
           </span>{" "}
-          <span>{transaction.amount / 10 ** 9} MINA</span>
+          <span>{transaction?.amount / 10 ** 9} MINA</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="w-48 text-xl font-semibold text-gray-800">
             Transaction Fee:
           </span>{" "}
-          <span>{transaction.fee / 10 ** 9} MINA</span>
+          <span>{transaction?.fee / 10 ** 9} MINA</span>
         </div>
       </div>
       <Hint
