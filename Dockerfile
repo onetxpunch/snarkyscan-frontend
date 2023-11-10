@@ -8,6 +8,8 @@ RUN bun i
 
 COPY  *.js *.ts *.json .
 
+COPY public public
+
 COPY __generated__ __generated__
 
 COPY src src

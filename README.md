@@ -21,6 +21,7 @@
 		- [Docker-compose](#docker-compose)
 	- [Architecture](#architecture)
 	- [Contributing](#contributing)
+	- [Why Mina?](#why-mina)
 
 ## Getting Started
 
@@ -43,7 +44,7 @@ The key features in the alpha release of the project are:
 - Overview of Mina market and recent blocks
 - Detailed lookups of wallets, blocks, and transactions
 - Support for [Berkeley testnet](https://berkeley.snarkyscan.com) and [Mina mainnet](https://snarkyscan.com)
-- Responsive design for mobile, tablet, desktop layouts
+- Connect a wallet to interact and highlight your activity with ZkApps
 - Open source auditable code with various deployment methods
 
 ## Deployment
@@ -92,3 +93,9 @@ To streamline contributions and avoid git conflicts, heres a good way to prepare
 5. Describe Your Changes: In the pull request, provide a concise description of your changes.
 
 When in doubt, feel free to still propose your change or start a discussion. Strong support and clear reasoning can lead to a contributor implementing your suggestions.
+
+## Why Mina?
+
+Snarkyscan is built for Mina's blockchain. The driving factor is the imminent launch of ZkApps on the mainnet which will unlock new programmatic use cases for decentralized application developers.
+
+As more ZkApps are deployed onto the live networks, it will become imperative for users to have reliable and robust options for examining their activity on-chain. Snarkyscan augments every setup with their own UI they can deploy and privately view information transparently and conveniently from any device with a browser.
