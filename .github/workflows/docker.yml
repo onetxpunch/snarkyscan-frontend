@@ -10,6 +10,7 @@ on:
 
 jobs:
   build-and-push:
+    permissions: write-all
     runs-on: ubuntu-latest
 
     steps:
@@ -27,3 +28,4 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ghcr.io/${{ github.repository_owner }}/snarkyscan:${{ github.ref_name }}
+        build-args: NODE_ENV=${{ github.ref_name }}

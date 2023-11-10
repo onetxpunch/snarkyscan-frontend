@@ -30,6 +30,7 @@ export default function App({
         <div className="p-8">
           <Component {...pageProps} />
         </div>
+        {/* <Footer /> */}
       </RelayEnvironmentProvider>
     </>
   );

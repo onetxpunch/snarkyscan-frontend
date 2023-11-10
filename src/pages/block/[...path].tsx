@@ -1,12 +1,12 @@
 import Block from "@/components/Block";
 import { NextSeo } from "next-seo";
-import { useRouter } from "next/router";
+import { useRouter } from "next/compat/router";
 import { Suspense } from "react";
 
 const Home = () => {
   const router = useRouter();
-  console.log(router.query.path);
-  if (!router.query.path) return <></>;
+  console.log(router?.query.path);
+  if (!router?.query.path) return <></>;
   const blockHeight = Number(router.query.path[0]);
   return (
     <Suspense fallback={<></>}>

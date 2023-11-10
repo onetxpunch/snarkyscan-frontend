@@ -1,16 +1,16 @@
 import Address from "@/components/Address";
 import Block from "@/components/Block";
 import { NextSeo } from "next-seo";
-import { useRouter } from "next/router";
+import { useRouter } from "next/compat/router";
 
 const Home = () => {
   const router = useRouter();
-  const address = router.query.path;
+  const address = router?.query.path;
   return (
     <>
       <NextSeo
         title={`Snarkyscan | Address ${
-          router.query.path && router.query.path[0]
+          router?.query.path && router?.query.path[0]
         }`}
         additionalLinkTags={[
           {
