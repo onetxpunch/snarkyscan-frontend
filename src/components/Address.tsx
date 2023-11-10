@@ -45,9 +45,9 @@ const BalanceInfo = ({ address, noAccount, setNoAccount }) => {
 
   useEffect(() => {
     const t = async () => {
-      if (!process.env.NEXT_PUBLIC_API_URL) return;
+      if (!process.env.NEXT_PUBLIC_API_2_URL) return;
       const publicKey = PublicKey.fromBase58(address);
-      setGraphqlEndpoints([process.env.NEXT_PUBLIC_API_URL]);
+      setGraphqlEndpoints([process.env.NEXT_PUBLIC_API_2_URL]);
       let { account, error } = await fetchAccount({
         publicKey,
       });
@@ -223,7 +223,7 @@ const Address = ({ address }) => {
             setNoAccount={setNoAccount}
           />
           <MoreInfo noAccount={noAccount} />
-          <OtherChains />
+          {/* <OtherChains /> */}
           <Hint
             text={`A wallet address is a publicly available address that allows its owner
         to receive funds from another party. To access the funds in an address,

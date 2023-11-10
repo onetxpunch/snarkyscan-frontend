@@ -105,7 +105,9 @@ const BlockOverview = ({ block }) => {
           {block.stateHashField}
         </div>
       </div>
-      <Hint text={`Blocks are ...`} />
+      <Hint
+        text={`Blocks are bundles of transactions from different accounts that are committed to the blockchain.`}
+      />
     </>
   );
 };
