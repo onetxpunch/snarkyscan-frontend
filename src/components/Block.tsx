@@ -7,6 +7,8 @@ import { VscChevronLeft } from "@react-icons/all-files/vsc/VscChevronLeft";
 import { VscChevronRight } from "@react-icons/all-files/vsc/VscChevronRight";
 import Hint from "./Hint";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import TxRow from "./TxRow";
 
 const BlockQuery = graphql`
   query BlockQuery($blockHeight: Int!) {
@@ -108,6 +110,69 @@ const BlockOverview = ({ block }) => {
   );
 };
 
+const BlockTxnListQuery = graphql`
+  query BlockTxnListQuery($blockHeight: Int!) {
+    transactions(
+      query: { blockHeight: $blockHeight, canonical: true }
+      sortBy: DATETIME_DESC
+    ) {
+      amount
+      blockHeight
+      canonical
+      dateTime
+      failureReason
+      fee
+      feeToken
+      from
+      hash
+      id
+      isDelegation
+      kind
+      memo
+      nonce
+      to
+      toAccount {
+        token
+      }
+      token
+      fromAccount {
+        token
+      }
+      feePayer {
+        token
+      }
+    }
+  }
+`;
+
+const TxnList = ({ block }) => {
+  const data = useLazyLoadQuery<any>(BlockTxnListQuery, { blockHeight: block });
+
+  const [minaBalance, setMinaBalance] = useState<number>();
+  return (
+    <div className="p-4 bg-white flex flex-col gap-3 border-slate-200 rounded-lg border-[1px]">
+      <div className="text-lg ">
+        A total of {data.transactions.length} transactions were found.
+      </div>
+      <div className="flex flex-col">
+        <div className="flex justify-between gap-4 font-semibold">
+          <div>Transaction Hash</div>
+          {/* <div>Action</div> */}
+          <div>Block</div>
+          <div>Age</div>
+          <div>From</div>
+          <div>To</div>
+        </div>
+        {/* <div>Value</div> */}
+        {/* <div>Fee</div> */}
+        {data?.transactions?.map((x) => (
+          <TxRow key={x.hash} {...x} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Block = ({
   blockHeight,
   route,
@@ -131,7 +196,9 @@ const Block = ({
       </h2>
       <BlockNav blockHeight={blockHeight} />
       {route === "txns" ? (
-        <>{/* <TxnList address={address[0]} /> */}</>
+        <>
+          <TxnList block={block.blockHeight} />
+        </>
       ) : (
         <>
           <BlockOverview block={block} />
