@@ -192,27 +192,28 @@ const TxnList = ({ data }) => {
 };
 
 const VerifySubmit = ({ zkapp, address }) => {
-  const [minaBalance, setMinaBalance] = useState<number>();
   const [input, setInput] = useState<string>();
   const [compilerVersion, setCompilerVersion] = useState("0.14.1");
 
   const triggerVerify = async () => {
-    const submission = await fetch("/api/verify/submit", {
+    const submission = await fetch("/api/lookup", {
       method: "POST",
       body: JSON.stringify({
         compilerVersion,
         input,
         verificationHash: zkapp.verificationKey.hash,
-        address,
+        publicKey: address,
       }),
     });
+    const r = await submission.json();
+    console.log(r, `verify response`);
   };
 
   return (
     <div className="p-4 bg-white flex flex-col gap-3 border-slate-200 rounded-lg border-[1px]">
       <div className="">
         Verify the source code of your ZkApp! It helps users trust the contracts
-        {"they're"} interacting with.
+        {" they're"} interacting with.
         {/* A total of {data.transactions.length} transactions were found. */}
       </div>
 
@@ -248,6 +249,12 @@ const VerifySubmit = ({ zkapp, address }) => {
           setInput(e.currentTarget.value);
         }}
       />
+      <div
+        className="p-4 font-semibold text-center text-white rounded-lg shadow-xl bg-emerald-600"
+        onClick={triggerVerify}
+      >
+        Submit for {address}
+      </div>
     </div>
   );
 };
