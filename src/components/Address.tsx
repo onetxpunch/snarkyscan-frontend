@@ -227,7 +227,7 @@ const VerifySubmit = ({ zkapp, address }) => {
       <div className="text-sm uppercase text-slate-600">Contract Code</div>
       <span className="text-sm">
         <Hint
-          text={`Find an example in our knowledgebase of how to verify a contract or visit our Discord!`}
+          text={`Check our docs for a guide on verifying your contract or visit our Discord for help!`}
         />
       </span>
       <textarea
