@@ -1,7 +1,6 @@
 import { VscClippy } from "@react-icons/all-files/vsc/VscClippy";
 import { VscDeviceCamera } from "@react-icons/all-files/vsc/VscDeviceCamera";
 import { Suspense, useEffect, useState } from "react";
-import { VscMortarBoard } from "@react-icons/all-files/vsc/VscMortarBoard";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Hint from "./Hint";
@@ -33,35 +32,14 @@ const Top = ({ address }) => {
         />
         <VscDeviceCamera className="hidden inline cursor-pointer hover:text-slate-800 text-slate-700" />
       </div>
-      <div className="text-sm bg-white border-[1px] border-slate-200 rounded-lg p-2 text-md font-mono">
+      <div className="text-xs bg-white border-[1px] border-slate-200 rounded-lg p-2 text-md font-mono">
         {address}
       </div>
     </div>
   );
 };
 
-const BalanceInfo = ({ address, noAccount, setNoAccount }) => {
-  const [minaBalance, setMinaBalance] = useState<number>();
-
-  useEffect(() => {
-    const t = async () => {
-      if (!process.env.NEXT_PUBLIC_API_2_URL) return;
-      const publicKey = PublicKey.fromBase58(address);
-      setGraphqlEndpoints([process.env.NEXT_PUBLIC_API_2_URL]);
-      let { account, error } = await fetchAccount({
-        publicKey,
-      });
-      if (error) {
-        console.log("error", error);
-        setNoAccount(true);
-      } else if (account) {
-        const res = Types.Account.toJSON(account!);
-        console.log("account", res);
-      }
-    };
-    if (address) t();
-  }, [address]);
-
+const BalanceInfo = ({ address, noAccount, setNoAccount, minaBalance }) => {
   return (
     <div className="p-4 bg-white flex flex-col gap-3 border-slate-200 rounded-lg border-[1px]">
       <div className="text-lg">Overview</div>
@@ -85,19 +63,26 @@ const BalanceInfo = ({ address, noAccount, setNoAccount }) => {
   );
 };
 
-const MoreInfo = ({ noAccount }) => {
-  const [minaBalance, setMinaBalance] = useState<number>();
+const MoreInfo = ({ noAccount, txns }) => {
   return (
     <div className="p-4 bg-white flex flex-col gap-3 border-slate-200 rounded-lg border-[1px]">
       <div className="text-lg">More Info</div>
       <div className="flex flex-col gap-1">
         <div className="text-sm uppercase text-slate-600">Last sent</div>
-        <div>{noAccount ? "No activity" : minaBalance}</div>
+        <div>
+          {noAccount || !txns || txns.transactions.length == 0
+            ? "No activity"
+            : DateTime.fromISO(
+                txns.transactions[txns.transactions.length - 1].dateTime
+              ).toRelative()}
+        </div>
       </div>
-      {!noAccount && (
+      {!noAccount && txns && txns.transactions.length > 1 && (
         <div className="flex flex-col gap-1">
           <div className="text-sm uppercase text-slate-600">First sent</div>
-          <div>{minaBalance}</div>
+          <div>
+            {DateTime.fromISO(txns.transactions[0].dateTime).toRelative()}
+          </div>
         </div>
       )}
     </div>
@@ -117,7 +102,7 @@ const OtherChains = ({}) => {
   );
 };
 
-const AccountNav = ({ address }) => {
+const AccountNav = ({ address, zkapp }) => {
   const router = useRouter();
   return (
     <div className="flex gap-2">
@@ -133,6 +118,14 @@ const AccountNav = ({ address }) => {
       >
         Transactions
       </Link>
+      {zkapp && (
+        <Link
+          href={`/address/${address}/verify/${zkapp.verificationKey.hash}`}
+          className={`p-2 rounded-lg hover:bg-slate-100 text-xs bg-slate-50 border-[1px] border-slate-200`}
+        >
+          Verify Code
+        </Link>
+      )}
     </div>
   );
 };
@@ -172,9 +165,7 @@ const TxnListQuery = graphql`
   }
 `;
 
-const TxnList = ({ address }) => {
-  const data = useLazyLoadQuery<any>(TxnListQuery, { from: address });
-
+const TxnList = ({ data }) => {
   const [minaBalance, setMinaBalance] = useState<number>();
   return (
     <div className="p-4 bg-white flex flex-col gap-3 border-slate-200 rounded-lg border-[1px]">
@@ -193,8 +184,36 @@ const TxnList = ({ address }) => {
         {/* <div>Value</div> */}
         {/* <div>Fee</div> */}
         {data?.transactions?.map((x) => (
-          <TxRow key={x.hash} {...x} address={address} />
+          <TxRow key={x.hash} {...x} />
         ))}
+      </div>
+    </div>
+  );
+};
+
+const ZkAppInfo = ({ zkapp, address }) => {
+  const [minaBalance, setMinaBalance] = useState<number>();
+  return (
+    <div className="p-4 bg-white flex flex-col gap-3 border-slate-200 rounded-lg border-[1px]">
+      <div className="text-lg">ZkApp</div>
+      <div className="flex flex-col gap-1">
+        <div className="text-sm uppercase text-slate-600">
+          Verification Key Hash
+        </div>
+        <div>{zkapp.verificationKey.hash}</div>
+      </div>
+      <div className="flex flex-col gap-1">
+        <div className="text-sm uppercase text-slate-600">Verified Code</div>
+        <div>
+          Not verified. If you know the source code,{" "}
+          <Link
+            href={`/address/${address}/verify/${zkapp.verificationKey.hash}`}
+            className={`text-emerald-600`}
+          >
+            verify it publicly here
+          </Link>
+          !
+        </div>
       </div>
     </div>
   );
@@ -202,27 +221,53 @@ const TxnList = ({ address }) => {
 
 const Address = ({ address }) => {
   const router = useRouter();
-
+  const data = useLazyLoadQuery<any>(TxnListQuery, { from: address });
+  const [acc, setAcc] = useState<any>();
+  const [minaBalance, setMinaBalance] = useState<number>();
   const [noAccount, setNoAccount] = useState(false);
   console.log(router, address);
+
+  useEffect(() => {
+    const t = async () => {
+      if (!process.env.NEXT_PUBLIC_API_2_URL) return;
+      const publicKey = PublicKey.fromBase58(address[0]);
+      setGraphqlEndpoints([process.env.NEXT_PUBLIC_API_2_URL]);
+      let { account, error } = await fetchAccount({
+        publicKey,
+      });
+      if (error) {
+        console.log("error", error);
+        setNoAccount(true);
+      } else if (account) {
+        const res = Types.Account.toJSON(account!);
+        setAcc(res);
+        console.log("account", res);
+        setMinaBalance(Number(res.balance) / 10 ** 9);
+      }
+    };
+    if (address) t();
+  }, [address]);
+
   return (
     <div className="flex flex-col gap-4">
       <Suspense>
         <Top address={address[0]} />
-        <AccountNav address={address[0]} />
+        <AccountNav zkapp={acc?.zkapp} address={address[0]} />
       </Suspense>
       {address[1] === "txns" ? (
         <>
-          <TxnList address={address[0]} />
+          <TxnList data={data} />
         </>
       ) : (
         <>
+          {acc?.zkapp && <ZkAppInfo address={address[0]} zkapp={acc.zkapp} />}
           <BalanceInfo
+            minaBalance={minaBalance}
             address={address[0]}
             noAccount={noAccount}
             setNoAccount={setNoAccount}
           />
-          <MoreInfo noAccount={noAccount} />
+          <MoreInfo noAccount={noAccount} txns={data} />
           {/* <OtherChains /> */}
           <Hint
             text={`A wallet address is a publicly available address that allows its owner
