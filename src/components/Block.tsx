@@ -156,19 +156,14 @@ const TxnList = ({ block }) => {
       <div className="text-lg ">
         A total of {data.transactions.length} transactions were found.
       </div>
-      <div className="flex flex-col">
-        <div className="flex justify-between gap-4 font-semibold">
-          <div>Transaction Hash</div>
-          {/* <div>Action</div> */}
-          <div>Block</div>
-          <div>Age</div>
-          <div>From</div>
-          <div>To</div>
-        </div>
-        {/* <div>Value</div> */}
-        {/* <div>Fee</div> */}
+      <div className="grid grid-cols-5">
+        <div className="col-span-2 font-semibold">Transaction Hash</div>
+        {/* <div>Action</div> */}
+        <div className="font-semibold">Age</div>
+        <div className="font-semibold">From</div>
+        <div className="font-semibold">To</div>
         {data?.transactions?.map((x) => (
-          <TxRow key={x.hash} {...x} />
+          <TxRow key={x.hash} {...x} showBlock={false} />
         ))}
       </div>
     </div>

@@ -16,7 +16,7 @@ import {
   Mina,
 } from "o1js";
 import TxRow from "./TxRow";
-import { formatUSD } from "@/ts/utils";
+import { formatNum, formatUSD } from "@/ts/utils";
 
 const Top = ({ address }) => {
   return (
@@ -58,7 +58,7 @@ const BalanceInfo = ({
             src="/mina-logo.png"
             className="w-5 h-5 rounded-full text-slate-800"
           />
-          {noAccount ? "0" : minaBalance}
+          {noAccount ? "0" : formatNum(minaBalance)}
         </div>
       </div>
 
