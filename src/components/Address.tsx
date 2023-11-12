@@ -62,10 +62,12 @@ const BalanceInfo = ({
         </div>
       </div>
 
-      <div className="flex flex-col gap-1">
-        <div className="text-sm uppercase text-slate-600">Mina Value</div>
-        <div>{noAccount ? "0.00" : formatUSD(minaBalance * minaPrice)}</div>
-      </div>
+      {!process.env.NEXT_PUBLIC_API_URL?.includes("berkeley") && (
+        <div className="flex flex-col gap-1">
+          <div className="text-sm uppercase text-slate-600">Mina Value</div>
+          <div>{noAccount ? "0.00" : formatUSD(minaBalance * minaPrice)}</div>
+        </div>
+      )}
     </div>
   );
 };
