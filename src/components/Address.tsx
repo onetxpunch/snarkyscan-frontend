@@ -16,6 +16,7 @@ import {
   Mina,
 } from "o1js";
 import TxRow from "./TxRow";
+import { formatUSD } from "@/ts/utils";
 
 const Top = ({ address }) => {
   return (
@@ -39,7 +40,13 @@ const Top = ({ address }) => {
   );
 };
 
-const BalanceInfo = ({ address, noAccount, setNoAccount, minaBalance }) => {
+const BalanceInfo = ({
+  address,
+  noAccount,
+  setNoAccount,
+  minaBalance,
+  minaPrice,
+}) => {
   return (
     <div className="p-4 bg-white flex flex-col gap-3 border-slate-200 rounded-lg border-[1px]">
       <div className="text-lg">Overview</div>
@@ -57,7 +64,7 @@ const BalanceInfo = ({ address, noAccount, setNoAccount, minaBalance }) => {
 
       <div className="flex flex-col gap-1">
         <div className="text-sm uppercase text-slate-600">Mina Value</div>
-        <div>${noAccount ? "0.00" : minaBalance}</div>
+        <div>{noAccount ? "0.00" : formatUSD(minaBalance * minaPrice)}</div>
       </div>
     </div>
   );
@@ -287,7 +294,7 @@ const ZkAppInfo = ({ zkapp, address }) => {
   );
 };
 
-const Address = ({ address }) => {
+const Address = ({ address, price }) => {
   const router = useRouter();
   const data = useLazyLoadQuery<any>(TxnListQuery, { from: address });
   const [acc, setAcc] = useState<any>();
@@ -332,6 +339,7 @@ const Address = ({ address }) => {
         <>
           {acc?.zkapp && <ZkAppInfo address={address[0]} zkapp={acc.zkapp} />}
           <BalanceInfo
+            minaPrice={price}
             minaBalance={minaBalance}
             address={address[0]}
             noAccount={noAccount}
