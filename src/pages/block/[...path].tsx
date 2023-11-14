@@ -1,17 +1,13 @@
 import Block from "@/components/Block";
 import { NextSeo } from "next-seo";
-import { useRouter } from "next/compat/router";
 import { Suspense } from "react";
 
-const Home = () => {
-  const router = useRouter();
-  console.log(router?.query.path);
-  if (!router?.query.path) return <></>;
-  const blockHeight = Number(router.query.path[0]);
+const Home = (path) => {
+  const blockHeight = Number(path[0]);
   return (
     <Suspense fallback={<></>}>
       <NextSeo
-        title={`Snarkyscan | Block ${router.query.path}`}
+        title={`Snarkyscan | Block ${path[0]}`}
         additionalLinkTags={[
           {
             rel: "icon",
@@ -20,7 +16,7 @@ const Home = () => {
         ]}
       />
       {!isNaN(blockHeight) ? (
-        <Block blockHeight={blockHeight} route={router.query.path[1]} />
+        <Block blockHeight={blockHeight} route={path[1]} />
       ) : (
         <>Not a block number</>
       )}
@@ -29,3 +25,7 @@ const Home = () => {
 };
 
 export default Home;
+
+export const getServerSideProps = async (context) => {
+  return { props: { path: context.query.path } };
+};

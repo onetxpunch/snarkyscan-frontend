@@ -1,13 +1,8 @@
 import Address from "@/components/Address";
-import Block from "@/components/Block";
 import { CoinGeckoClient } from "coingecko-api-v3";
 import { NextSeo } from "next-seo";
-import { useRouter } from "next/compat/router";
 
 const Home = ({ price, path }) => {
-  // const router = useRouter();
-  // const address = router?.query.path;
-  console.log(price);
   return (
     <>
       <NextSeo
@@ -38,11 +33,11 @@ export const getServerSideProps = async (context) => {
       vs_currencies: "usd",
       include_market_cap: true,
     });
-    console.log(context);
+
     return {
       props: { price: price["mina-protocol"].usd, path: context.query.path },
     };
   } catch (err) {
-    return { props: {} };
+    return { props: { path: context.query.path } };
   }
 };

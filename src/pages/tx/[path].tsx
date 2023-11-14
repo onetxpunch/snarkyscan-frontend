@@ -1,16 +1,11 @@
 import Tx from "@/components/Tx";
 import { NextSeo } from "next-seo";
-import { useRouter } from "next/compat/router";
 
-const Home = () => {
-  const router = useRouter();
-  const tx = router?.query.path;
+const Home = ({ path }) => {
   return (
     <>
       <NextSeo
-        title={`Snarkyscan | Transaction ${
-          router?.query.path && router.query.path
-        }`}
+        title={`Snarkyscan | Transaction ${path}`}
         additionalLinkTags={[
           {
             rel: "icon",
@@ -18,9 +13,13 @@ const Home = () => {
           },
         ]}
       />
-      {tx && <Tx tx={tx} />}
+      {path && <Tx tx={path} />}
     </>
   );
 };
 
 export default Home;
+
+export const getServerSideProps = async (context) => {
+  return { props: { path: context.query.path } };
+};
