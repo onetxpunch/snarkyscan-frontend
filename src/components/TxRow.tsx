@@ -20,7 +20,9 @@ const TxRow = (data) => {
         </Link>
       )}
 
-      <div className="">{DateTime.fromISO(data.dateTime).toRelative()}</div>
+      {data.showAge && (
+        <div className="">{DateTime.fromISO(data.dateTime).toRelative()}</div>
+      )}
 
       <Link
         className=" text-emerald-600 hover:text-emerald-500"

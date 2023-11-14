@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5591c142d3f73dbe344cb9f4fba4619a>>
+ * @generated SignedSource<<58819a17dda6d7caaf6947b96d1e5c71>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,10 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type BlockQuery$variables = {
+export type BlockViewQuery$variables = {
   blockHeight: number;
 };
-export type BlockQuery$data = {
+export type BlockViewQuery$data = {
   readonly block: {
     readonly blockHeight: number | null | undefined;
     readonly canonical: boolean | null | undefined;
@@ -31,9 +31,9 @@ export type BlockQuery$data = {
     } | null | undefined;
   } | null | undefined;
 };
-export type BlockQuery = {
-  response: BlockQuery$data;
-  variables: BlockQuery$variables;
+export type BlockViewQuery = {
+  response: BlockViewQuery$data;
+  variables: BlockViewQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -166,7 +166,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "BlockQuery",
+    "name": "BlockViewQuery",
     "selections": (v2/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -175,20 +175,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "BlockQuery",
+    "name": "BlockViewQuery",
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "e19fffab2b36ca49e21d41b6229c5c9f",
+    "cacheID": "ae31f1fb128ad52c544cd6dd895b65db",
     "id": null,
     "metadata": {},
-    "name": "BlockQuery",
+    "name": "BlockViewQuery",
     "operationKind": "query",
-    "text": "query BlockQuery(\n  $blockHeight: Int!\n) {\n  block(query: {blockHeight: $blockHeight}) {\n    snarkFees\n    blockHeight\n    creatorAccount {\n      publicKey\n    }\n    dateTime\n    canonical\n    creator\n    receivedTime\n    stateHash\n    stateHashField\n    txFees\n    winnerAccount {\n      publicKey\n    }\n  }\n}\n"
+    "text": "query BlockViewQuery(\n  $blockHeight: Int!\n) {\n  block(query: {blockHeight: $blockHeight}) {\n    snarkFees\n    blockHeight\n    creatorAccount {\n      publicKey\n    }\n    dateTime\n    canonical\n    creator\n    receivedTime\n    stateHash\n    stateHashField\n    txFees\n    winnerAccount {\n      publicKey\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3879d9839707429e7493eb5170348761";
+(node as any).hash = "f8aed6523e638189f73cbd681f5f4f51";
 
 export default node;
