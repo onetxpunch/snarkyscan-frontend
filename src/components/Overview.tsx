@@ -55,7 +55,7 @@ const Overview = ({ price }: { price? }) => {
 
   useEffect(() => {
     if (!lastPrice && !price) fetchPriceInfo();
-  }, []);
+  }, [lastPrice, price]);
 
   return (
     <div className="flex flex-col gap-5 p-4 my-4 shadow-xl rounded-xl bg-slate-100  border-[1px] border-emerald-400">

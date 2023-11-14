@@ -2,7 +2,7 @@ import Block from "@/components/Block";
 import { NextSeo } from "next-seo";
 import { Suspense } from "react";
 
-const Home = (path) => {
+const Home = ({ path }) => {
   const blockHeight = Number(path[0]);
   return (
     <Suspense fallback={<></>}>

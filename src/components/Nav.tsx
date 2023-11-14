@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Connect from "./Connect";
 
 const SetNetwork = () => {
@@ -65,6 +65,12 @@ const SetNetwork = () => {
 };
 
 const Nav = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <div className="sticky top-0 flex flex-col justify-center w-full h-16 p-4 mx-auto mb-8 text-2xl font-black text-white shadow-xl bg-emerald-950">
       <div className="container flex items-center justify-between mx-auto">
@@ -82,7 +88,7 @@ const Nav = () => {
           }}
         >
           {/* <SetNetwork /> */}
-          <Connect />
+          {isClient && window?.mina !== undefined && <Connect />}
         </div>
       </div>
     </div>

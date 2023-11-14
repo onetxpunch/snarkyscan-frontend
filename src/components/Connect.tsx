@@ -13,8 +13,6 @@ export const Connect = () => {
     }
   };
 
-
-
   return (
     <>
       {connectData ? (
