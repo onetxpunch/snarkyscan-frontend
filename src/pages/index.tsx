@@ -1,10 +1,6 @@
-import Image from "next/image";
-import List from "@/components/List";
-import Search from "@/components/Search";
-import Overview from "@/components/Overview";
 import { NextSeo } from "next-seo";
-import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import { CoinGeckoClient } from "coingecko-api-v3";
+import Homepage from "@/components/HomePage/Home";
 
 export default function Home({ price }: { price? }) {
   return (
@@ -18,9 +14,7 @@ export default function Home({ price }: { price? }) {
           },
         ]}
       />
-      <Search />
-      <Overview price={price} />
-      <List />
+      <Homepage price={price} />
     </>
   );
 }
@@ -28,8 +22,8 @@ export default function Home({ price }: { price? }) {
 export const getServerSideProps = async (context) => {
   try {
     const client = new CoinGeckoClient({
-      timeout: 10000,
-      autoRetry: true,
+      timeout: 1500,
+      autoRetry: false,
     });
 
     const price = await client.simplePrice({
