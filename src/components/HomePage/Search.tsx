@@ -14,7 +14,7 @@ const Search = () => {
   }, [input]);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col">
       <div className="py-4 -mt-8 text-2xl font-semibold tracking-tighter">
         Mina Blockchain Explorer
       </div>

@@ -2,17 +2,17 @@ FROM oven/bun
 
 WORKDIR /usr/src/app
 
-COPY bun.lockb package.json .
+COPY bun.lockb package.json ./
 
-RUN bun i
+RUN bun install
 
-COPY  *.js *.ts *.json .
-
-COPY public public
+COPY  *.js *.ts *.json ./
 
 COPY __generated__ __generated__
 
 COPY src src
+
+COPY public public
 
 ARG NODE_ENV
 ENV NODE_ENV=${NODE_ENV}

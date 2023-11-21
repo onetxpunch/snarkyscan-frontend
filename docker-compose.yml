@@ -1,5 +1,7 @@
 services:
   app:
+    build:
+      context: .
     restart: unless-stopped
     image: ghcr.io/onetxpunch/snarkyscan:develop
     expose:
