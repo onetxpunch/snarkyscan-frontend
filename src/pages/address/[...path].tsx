@@ -1,4 +1,4 @@
-import Address from "@/components/Address";
+import Address from "@/components/AddressPage/Address";
 import { CoinGeckoClient } from "coingecko-api-v3";
 import { NextSeo } from "next-seo";
 
