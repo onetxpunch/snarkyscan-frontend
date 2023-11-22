@@ -29,10 +29,39 @@ const OverviewQuery = graphql`
     }
   }
 `;
-const Overview = ({ price }: { price? }) => {
-  const [lastPrice, setLastPrice] = useState<string>(
-    formatUSD(price["mina-protocol"].usd)
+
+const PriceLine = ({ lastPrice, minaToEth, priceChange }) => {
+  return (
+    <div>
+      <Suspense fallback={<>000</>}>{lastPrice}</Suspense>{" "}
+      <span className="text-gray-600">
+        @{" "}
+        {new Intl.NumberFormat("en-US", {
+          minimumFractionDigits: 6,
+        }).format(minaToEth)}
+        {" ETH "}
+      </span>
+      <span
+        className={`${priceChange > 0 ? "text-green-400" : "text-red-400"}`}
+      >
+        (
+        {new Intl.NumberFormat("en-US", {
+          minimumFractionDigits: 3,
+          style: "percent",
+        }).format(priceChange / 100)}
+        )
+      </span>
+    </div>
   );
+};
+
+const Overview = ({ price }: { price? }) => {
+  // src/pages/index.tsx#ssr props
+  const minaUsd = price["mina-protocol"].usd;
+  const ethUsd = price["ethereum"].usd;
+  const minaToEth = minaUsd / ethUsd;
+  console.log(minaToEth);
+  const [lastPrice, setLastPrice] = useState<string>(formatUSD(minaUsd));
   const [marketCap, setMarketCap] = useState<string>(
     formatUSD(price["mina-protocol"].usd_market_cap)
   );
@@ -45,7 +74,7 @@ const Overview = ({ price }: { price? }) => {
     });
 
     const price = await client.simplePrice({
-      ids: "mina-protocol",
+      ids: ["mina-protocol", "ethereum"].join(","),
       vs_currencies: "usd",
       include_market_cap: true,
     });
@@ -68,16 +97,18 @@ const Overview = ({ price }: { price? }) => {
             className="w-8 h-8 rounded-full text-slate-800"
           />
           <div className="flex flex-col">
-            <div className="text-sm uppercase text-slate-600"> Mina price</div>
-            <div>
-              <Suspense fallback={<>000</>}>{lastPrice}</Suspense>
-            </div>
+            <div className="text-xs uppercase text-slate-600"> Mina price</div>
+            <PriceLine
+              lastPrice={lastPrice}
+              minaToEth={minaToEth}
+              priceChange={price["mina-protocol"]?.usd_24h_change}
+            />
           </div>
         </div>
         <div className="flex items-center gap-2">
           <VscGlobe className="w-8 h-8 text-slate-800" />
           <div className="flex flex-col">
-            <div className="text-sm uppercase text-slate-600">Market cap</div>
+            <div className="text-xs uppercase text-slate-600">Market cap</div>
             <div>
               <Suspense fallback={<>000</>}>{marketCap}</Suspense>
             </div>
