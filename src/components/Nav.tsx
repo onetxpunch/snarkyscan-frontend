@@ -77,7 +77,7 @@ const Nav = () => {
         <Link href="/" className="flex items-center gap-2">
           <img src="/snarkyscanicon.png" className="object-contain w-12 h-12" />
           <div>Snarkyscan</div>
-          <div className="p-3 ml-2 text-xs bg-orange-500 rounded-lg font-base">
+          <div className="p-2 ml-2 text-xs bg-orange-500 rounded-lg font-base">
             Berkeley Testnet
           </div>
         </Link>
