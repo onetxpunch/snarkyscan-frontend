@@ -1,3 +1,5 @@
+import { VscGraph } from "@react-icons/all-files/vsc/VscGraph";
+
 import { CoinGeckoClient } from "coingecko-api-v3";
 import { graphql } from "relay-runtime";
 import { useLazyLoadQuery } from "react-relay";
@@ -89,7 +91,7 @@ const Overview = ({ price }: { price? }) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="text-xl font-semibold">Mina Overview</div>
-      <div className="flex flex-col gap-5 p-4 my-4 shadow-xl rounded-xl  bg-gradient-to-tl from-emerald-50 to-white bg-slate-100  border-[1px] border-emerald-400">
+      <div className="flex flex-col gap-5 p-4 my-4 shadow-xl rounded-xl  bg-gradient-to-tl from-emerald-50 to-white bg-slate-100  border-[1px] border-emerald-950">
         <div className="flex items-center gap-2">
           <img
             alt="mina logo"
@@ -111,6 +113,17 @@ const Overview = ({ price }: { price? }) => {
             <div className="text-xs uppercase text-slate-600">Market cap</div>
             <div>
               <Suspense fallback={<>000</>}>{marketCap}</Suspense>
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <VscGraph className="w-8 h-8 text-slate-800" />
+          <div className="flex flex-col">
+            <div className="text-xs uppercase text-slate-600">
+              Med gas price
+            </div>
+            <div>
+              <Suspense fallback={<>000</>}>{"TBD"} MINA</Suspense>
             </div>
           </div>
         </div>

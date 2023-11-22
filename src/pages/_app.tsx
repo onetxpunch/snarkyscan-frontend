@@ -28,7 +28,7 @@ export default function App({
     <>
       <Nav />
       <RelayEnvironmentProvider environment={environment}>
-        <div className="container flex-col items-center justify-between max-w-5xl p-8 mx-auto">
+        <div className="container flex-col items-center justify-between max-w-2xl p-8 mx-auto">
           <Component {...pageProps} />
         </div>
       </RelayEnvironmentProvider>
