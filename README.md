@@ -4,6 +4,8 @@
 
 [![.github/workflows/docker.yml](https://github.com/onetxpunch/snarkyscan-frontend/actions/workflows/docker.yml/badge.svg)](https://github.com/onetxpunch/snarkyscan-frontend/actions/workflows/docker.yml)
 
+[![](https://x.com/favicon.ico)](https://x.com/snarkyscan) [Follow updates on Twitter/X!](https://x.com/snarkyscan)
+
 ## Overview
 
 [Snarkyscan](https://snarkyscan.com) is an open source block explorer for [Mina](https://minaprotocol.com) protocol that you can selfhost and explore information about Mina accounts and ZkApps deployed on different networks.

@@ -32,7 +32,6 @@ export const getServerSideProps = async (context) => {
       include_market_cap: true,
       include_24hr_change: true,
     });
-    console.log(price);
     return { props: { price } };
   } catch (err) {
     return { props: {} };
