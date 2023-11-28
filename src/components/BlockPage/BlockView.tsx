@@ -28,7 +28,7 @@ const BlockViewQuery = graphql`
   }
 `;
 
-const BlockView = ({ blockHeight }) => {
+const BlockView = ({ blockHeight, data }) => {
   const { block } = useLazyLoadQuery<any>(BlockViewQuery, { blockHeight });
   const [isClient, setIsClient] = useState(false);
 
@@ -65,7 +65,8 @@ const BlockView = ({ blockHeight }) => {
             href={`/address/${block.winnerAccount.publicKey}`}
             className="text-emerald-700 visited:text-emerald-800"
           >
-            {block.winnerAccount.publicKey}
+            {block.winnerAccount.publicKey.slice(0, 6)}...
+            {block.winnerAccount.publicKey.slice(-6)}
           </Link>
         </div>
         <div className="flex items-center gap-2">
@@ -80,6 +81,12 @@ const BlockView = ({ blockHeight }) => {
           </span>{" "}
           <span>{block.snarkFees / 10 ** 9} MINA</span>
         </div>
+        {/* <div className="flex items-center gap-2">
+          <span className="w-48 text-xl font-semibold text-gray-800">
+            Transactions:
+          </span>{" "}
+          <span>{data.transactions.length} in this block</span>
+        </div> */}
         <div className="flex items-center gap-2">
           <span className="text-xl font-semibold text-gray-800">
             State Hash:

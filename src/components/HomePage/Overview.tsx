@@ -127,7 +127,7 @@ const Overview = ({ price }: { price? }) => {
             </div>
           </div>
         </div>
-        {/* <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <VscCreditCard className="w-8 h-8 text-slate-800" />
           <div className="flex flex-col">
             <div className="text-sm uppercase text-slate-600">
@@ -139,7 +139,7 @@ const Overview = ({ price }: { price? }) => {
               </Suspense>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );

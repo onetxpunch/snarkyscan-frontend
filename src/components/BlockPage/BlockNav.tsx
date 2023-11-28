@@ -15,6 +15,16 @@ const BlockNav = ({ blockHeight }) => {
       >
         Transactions
       </Link>
+      <div
+        className={`p-2 rounded-lg hover:bg-slate-100 text-xs bg-slate-50 border-[1px] border-slate-200 select-none text-gray-800 opacity-50`}
+      >
+        Block Reward
+      </div>
+      <div
+        className={`p-2 rounded-lg hover:bg-slate-100 text-xs bg-slate-50 border-[1px] border-slate-200 select-none text-gray-800 opacity-50`}
+      >
+        Changes
+      </div>
     </div>
   );
 };

@@ -46,8 +46,7 @@ const BlockTxnListQuery = graphql`
   }
 `;
 
-const TxnList = ({ block }) => {
-  const data = useLazyLoadQuery<any>(BlockTxnListQuery, { blockHeight: block });
+const TxnList = ({ block, data }) => {
   return (
     <div className="p-4 bg-white flex flex-col gap-3 border-slate-200 rounded-lg border-[1px]">
       <div className="text-lg ">
@@ -74,17 +73,19 @@ const Block = ({
   blockHeight: number;
   route?: string;
 }) => {
+  const data = useLazyLoadQuery<any>(BlockTxnListQuery, { blockHeight });
+
   return (
     <div className="flex flex-col gap-2">
       <BlockTitle blockHeight={blockHeight} />
       <BlockNav blockHeight={blockHeight} />
       {route === "txns" ? (
         <>
-          <TxnList block={blockHeight} />
+          <TxnList block={blockHeight} data={data} />
         </>
       ) : (
         <>
-          <BlockView blockHeight={blockHeight} />
+          <BlockView blockHeight={blockHeight} data={data} />
         </>
       )}
     </div>
