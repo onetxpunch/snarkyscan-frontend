@@ -32,7 +32,7 @@ module.exports = nextConfig;
 // Injected content via Sentry wizard below
 
 const { withSentryConfig } = require("@sentry/nextjs");
-if (process.env.NODE_ENV.startsWith("dev")) {
+if (!process.env.NODE_ENV.startsWith("dev")) {
   module.exports = withSentryConfig(
     module.exports,
     {
