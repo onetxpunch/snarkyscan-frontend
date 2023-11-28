@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
+    "@sentry/nextjs": "^7.82.0",
     "@tailwindcss/forms": "^0.5.7",
     "apexcharts": "^3.44.0",
     "coingecko-api-v3": "^0.0.29",
