@@ -147,7 +147,9 @@ const Tx = ({ tx }) => {
             href={`/address/${transaction?.source.publicKey}`}
             className="text-emerald-700 visited:text-emerald-800"
           >
-            {transaction?.source.publicKey}
+            {transaction?.source.publicKey.slice(0, 8) +
+              "..." +
+              transaction?.source.publicKey.slice(-8)}
           </Link>
         </div>
         <div className="flex items-center gap-2">
@@ -156,7 +158,9 @@ const Tx = ({ tx }) => {
             href={`/address/${transaction?.receiver.publicKey}`}
             className="text-emerald-700 visited:text-emerald-800"
           >
-            {transaction?.receiver.publicKey}
+            {transaction?.receiver.publicKey.slice(0, 8) +
+              "..." +
+              transaction?.receiver.publicKey.slice(-8)}
           </Link>
         </div>
         <hr />
