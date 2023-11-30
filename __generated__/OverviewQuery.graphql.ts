@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b51c4c887884447a155ee7981fbb0ff4>>
+ * @generated SignedSource<<b28d0e9d6de600b851bc9ccd1a756657>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,11 @@ export type OverviewQuery$data = {
     readonly snarkFees: any | null | undefined;
     readonly stateHash: string | null | undefined;
     readonly stateHashField: string | null | undefined;
+    readonly transactions: {
+      readonly feeTransfer: ReadonlyArray<{
+        readonly fee: any | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
     readonly txFees: any | null | undefined;
     readonly winnerAccount: {
       readonly publicKey: string | null | undefined;
@@ -51,7 +56,7 @@ v1 = [
       {
         "kind": "Literal",
         "name": "limit",
-        "value": 1
+        "value": 10
       },
       {
         "kind": "Literal",
@@ -153,9 +158,38 @@ v1 = [
         "plural": false,
         "selections": (v0/*: any*/),
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "BlockTransaction",
+        "kind": "LinkedField",
+        "name": "transactions",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "BlockTransactionFeeTransfer",
+            "kind": "LinkedField",
+            "name": "feeTransfer",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "fee",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
       }
     ],
-    "storageKey": "blocks(limit:1,query:{\"canonical\":true},sortBy:\"BLOCKHEIGHT_DESC\")"
+    "storageKey": "blocks(limit:10,query:{\"canonical\":true},sortBy:\"BLOCKHEIGHT_DESC\")"
   }
 ];
 return {
@@ -176,16 +210,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "6fefa35c1b3c91d0774efc28e7985cb6",
+    "cacheID": "939ee775a837b28b723ce0a5b356772b",
     "id": null,
     "metadata": {},
     "name": "OverviewQuery",
     "operationKind": "query",
-    "text": "query OverviewQuery {\n  blocks(sortBy: BLOCKHEIGHT_DESC, query: {canonical: true}, limit: 1) {\n    snarkFees\n    blockHeight\n    creatorAccount {\n      publicKey\n    }\n    dateTime\n    canonical\n    creator\n    receivedTime\n    stateHash\n    stateHashField\n    txFees\n    winnerAccount {\n      publicKey\n    }\n  }\n}\n"
+    "text": "query OverviewQuery {\n  blocks(sortBy: BLOCKHEIGHT_DESC, query: {canonical: true}, limit: 10) {\n    snarkFees\n    blockHeight\n    creatorAccount {\n      publicKey\n    }\n    dateTime\n    canonical\n    creator\n    receivedTime\n    stateHash\n    stateHashField\n    txFees\n    winnerAccount {\n      publicKey\n    }\n    transactions {\n      feeTransfer {\n        fee\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "69a99a21a2712b3630a919cdb1fb319b";
+(node as any).hash = "c1a66f292ce2638d1e8653126d71ee69";
 
 export default node;

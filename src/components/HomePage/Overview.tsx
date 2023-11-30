@@ -12,7 +12,7 @@ import { formatUSD, formatNum } from "@/ts/utils";
 
 const OverviewQuery = graphql`
   query OverviewQuery {
-    blocks(sortBy: BLOCKHEIGHT_DESC, query: { canonical: true }, limit: 1) {
+    blocks(sortBy: BLOCKHEIGHT_DESC, query: { canonical: true }, limit: 10) {
       snarkFees
       blockHeight
       creatorAccount {
@@ -27,6 +27,11 @@ const OverviewQuery = graphql`
       txFees
       winnerAccount {
         publicKey
+      }
+      transactions {
+        feeTransfer {
+          fee
+        }
       }
     }
   }
@@ -67,6 +72,7 @@ const Overview = ({ price }: { price? }) => {
   const [marketCap, setMarketCap] = useState<string>(
     formatUSD(price["mina-protocol"].usd_market_cap)
   );
+  const [medianFee, setMedianFee] = useState<number>();
   const data = useLazyLoadQuery<OverviewQueryT>(OverviewQuery, {});
 
   const fetchPriceInfo = async () => {
@@ -87,6 +93,20 @@ const Overview = ({ price }: { price? }) => {
   useEffect(() => {
     if (!lastPrice && !price) fetchPriceInfo();
   }, [lastPrice, price]);
+
+  useEffect(() => {
+    if (data) {
+      const feeArray = data.blocks
+        .filter((x) => x?.transactions)
+        .flatMap((x) => {
+          return Number(x?.txFees);
+        })
+        .filter((x) => isNaN(x));
+      const meanFee = (arr) =>
+        feeArray.reduce((a, b) => a + b, 0) / feeArray.length;
+      setMedianFee(meanFee);
+    }
+  }, [data]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -123,7 +143,9 @@ const Overview = ({ price }: { price? }) => {
               Med gas price
             </div>
             <div>
-              <Suspense fallback={<>000</>}>{"TBD"} MINA</Suspense>
+              <Suspense fallback={<>000</>}>
+                {medianFee ? medianFee / 10 ** 9 : "..."} MINA
+              </Suspense>
             </div>
           </div>
         </div>
