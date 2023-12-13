@@ -1,8 +1,10 @@
 import { formatNum } from "@/ts/utils";
+import { VscWordWrap } from "@react-icons/all-files/vsc/VscWordWrap";
 import { VscExtensions } from "@react-icons/all-files/vsc/VscExtensions";
 import { DateTime } from "luxon";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+// import { VscPieChart } from "react-icons/vsc";
 
 const BlockCard = ({ block }) => {
   const [isClient, setIsClient] = useState(false);
@@ -19,7 +21,17 @@ const BlockCard = ({ block }) => {
         <div className="flex gap-2 text-3xl font-bold text-emerald-600">
           {/*<VscExtensions />*/} {formatNum(block?.blockHeight)}
         </div>
-        <div className="text-xs">
+        <div className="flex items-center w-auto gap-2 px-2 mx-auto text-xs font-bold text-center border-solid rounded border-emerald-400">
+          <VscWordWrap className="w-6 h-6 text-emerald-800" />{" "}
+          <div>
+            <span className="text-[9px]">
+              {block.txFees / 10 ** 9 + block.snarkFees / 10 ** 9}
+            </span>
+            <br />
+            MINA
+          </div>
+        </div>
+        <div className="text-xs text-center">
           {!isClient ? "" : DateTime.fromISO(block?.dateTime).toRelative()}
         </div>
       </div>

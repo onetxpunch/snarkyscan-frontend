@@ -23,7 +23,7 @@ const Search = () => {
           type="text"
           value={input}
           className="w-full max-w-2xl rounded-lg accent-emerald-500 focus:outline-emerald-500 focus:ring-emerald-500"
-          placeholder="Type an address, block number, tx hash"
+          placeholder="Enter an address, block number, tx hash"
           onChange={(e) => {
             setInput(`${e.currentTarget.value}`);
           }}
@@ -31,7 +31,11 @@ const Search = () => {
         <Link
           href={link}
           className={`-ml-12 rounded-lg items-center justify-center flex p-2 bg-emerald-400 flex gap-2 hover:bg-emerald-500 cursor-pointer active:bg-emerald-200 select-none ${
-            input?.length == 0 ? "bg-slate-400" : "bg-emerald-500"
+            input?.length == 0
+              ? "bg-slate-400"
+              : link !== "/"
+              ? "bg-emerald-500"
+              : "bg-slate-400"
           }`}
         >
           <VscSearch />

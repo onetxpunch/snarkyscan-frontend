@@ -1,5 +1,4 @@
 import { VscGraph } from "@react-icons/all-files/vsc/VscGraph";
-
 import { CoinGeckoClient } from "coingecko-api-v3";
 import { graphql } from "relay-runtime";
 import { useLazyLoadQuery } from "react-relay";
@@ -66,8 +65,6 @@ const Overview = ({ price }: { price? }) => {
   // src/pages/index.tsx#ssr props
   const minaUsd = price["mina-protocol"].usd;
   const ethUsd = price["ethereum"].usd;
-  const minaToEth = minaUsd / ethUsd;
-  console.log(minaToEth);
   const [lastPrice, setLastPrice] = useState<string>(formatUSD(minaUsd));
   const [marketCap, setMarketCap] = useState<string>(
     formatUSD(price["mina-protocol"].usd_market_cap)
@@ -110,8 +107,8 @@ const Overview = ({ price }: { price? }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="text-xl font-semibold">Mina Overview</div>
-      <div className="flex flex-col gap-5 p-4 my-4 shadow-xl rounded-xl  bg-gradient-to-tl from-emerald-50 to-white bg-slate-100  border-[1px] border-emerald-950">
+      <div className="text-xl font-semibold">Market Overview</div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-4 my-4 shadow-xl rounded-xl  bg-gradient-to-tl from-emerald-50 to-white bg-slate-100  border-[1px] border-emerald-950">
         <div className="flex items-center gap-2">
           <img
             alt="mina logo"
@@ -122,7 +119,7 @@ const Overview = ({ price }: { price? }) => {
             <div className="text-xs uppercase text-slate-600"> Mina price</div>
             <PriceLine
               lastPrice={lastPrice}
-              minaToEth={minaToEth}
+              minaToEth={minaUsd / ethUsd}
               priceChange={price["mina-protocol"]?.usd_24h_change}
             />
           </div>
