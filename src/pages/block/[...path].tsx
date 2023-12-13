@@ -20,7 +20,7 @@ const Home = ({ path }) => {
         fallback={
           <img
             src="/snarkyscanicon.png"
-            className="w-64 h-64 opacity-50 animate-pulse"
+            className="object-contain w-full h-64 opacity-50 animate-pulse"
           />
         }
       >
